@@ -1,0 +1,72 @@
+(defrule
+	(true)
+=>
+    (set-strategic-number sn-do-not-scale-for-difficulty-level 1)
+	(set-strategic-number sn-cap-civilian-explorers 0)
+    (set-strategic-number sn-number-explore-groups 1)
+    (set-strategic-number sn-total-number-explorers 1)
+    (set-strategic-number sn-cap-civilian-builders 200)
+    (set-strategic-number sn-enable-boar-hunting 1) ; 0 for deers only 1 for deers and boars
+	(disable-self)
+)
+
+
+
+; vkc Valkyrja constant
+; vkg Valkyrja goal
+
+(defconst vkc-max-villagers 150)
+(defconst vkc-dark-age-villagers-count-for-lumber-camp 7)
+(defconst vkc-dark-age-villagers-count-for-mill 11)
+
+
+
+(defrule
+    (can-research feudal-age)
+=>
+    (research feudal-age)
+)
+
+
+
+(defrule
+    (civilian-population < vkc-max-villagers)
+    (can-train villager)
+=>
+    (train villager)
+)
+
+
+
+;#load-if-defined HUN-CIV        ; huns do not need houses
+;#else
+(defrule
+    (population-headroom > 0)   ; difference between population cap and current population
+    (housing-headroom < 2)      ; empty free spaces for new population
+    (can-build house)
+=>
+    (build house)
+)
+;#end-if
+
+
+
+(defrule
+    (civilian-population >= vkc-dark-age-villagers-count-for-lumber-camp)
+    (building-type-count-total lumber-camp == 0)
+    (can-build lumber-camp)
+=>
+    (build lumber-camp)
+    (set-strategic-number sn-food-gatherer-percentage 80)
+    (set-strategic-number sn-wood-gatherer-percentage 20)
+)
+
+
+
+(defrule
+    (civilian-population >= vkc-dark-age-villagers-count-for-mill)
+    (building-type-count-total mill == 0)
+    (can-build mill)
+=>
+    (build mill)
+)
