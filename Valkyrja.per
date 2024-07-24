@@ -1,34 +1,115 @@
 ; Valkyrja AoE2 AI by Nelenii for AoE2 Definitive Edition
 
-; ---- Constants ----
+
+; ---- BEGIN Constants ----
 
 (defconst vkc_False 0)
 (defconst vkc_True 1)
 
-(defconst vkc_DebugLog_RuleError vkc_True)
-(defconst vkc_DebugLog_LoopData vkc_True)
+(defconst vkc_DebugLog_RuleError    vkc_True)
+(defconst vkc_DebugLog_Info         vkc_True)
+(defconst vkc_DebugLog_LoopData     vkc_False)
 
 (defconst vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance   20)
 (defconst vkc_EarlyGame_FishHunt_MaxDropDistance            30)
 (defconst vkc_LateGame_WoodFoodGoldStone_MaxDropDistance    -1)
 (defconst vkc_LateGame_FishHunt_MaxDropDistance             -1)
 
+(defconst vkc_HousingHeadroomLimit 3)
 
-; ---- Goals ----
+; ---- END Constants ----
+
+
+; ---- BEGIN Goals ----
 
 (defconst vkg_GameTimestamp 1)
 (defconst vkg_LoopCount 2)
 (defconst vkg_LoopTimeMs 3)
 
+(defconst vkg_Temp0 4)
+(defconst vkg_Temp_ScopeLocalRule_0 10)
 
-; ---- Rules ----
 
+; Units
+(defconst vkg_Target_Villager_Count                     100)
+
+(defconst vkg_Target_TradeCart_Count                    101)
+
+(defconst vkg_Target_Monk_Count                         102)    
+(defconst vkg_Target_SpecialMonasteryUnit_Count         103)
+
+(defconst vkg_Target_Trebuchet_Count                    104)
+(defconst vkg_Target_Petard_Count                       105)
+(defconst vkg_Target_SpecialCastleUnit_Count            106)
+
+(defconst vkg_Target_FishingShip_Count                  107)
+(defconst vkg_Target_TradeCog_Count                     108)
+(defconst vkg_Target_TransportShip_Count                109)
+(defconst vkg_Target_Galley_Count                       110)
+(defconst vkg_Target_FireShip_Count                     111)
+(defconst vkg_Target_DemolitionShip_Count               112)
+(defconst vkg_Target_CannonGalleon_Dromon_Count         113)
+(defconst vkg_Target_SpecialDockUnit_Count              114)
+
+(defconst vkg_Target_Ram_ArmoredElephant_Count          115)
+(defconst vkg_Target_Mangonel_Count                     116)
+(defconst vkg_Target_Scorpion_Count                     117)
+(defconst vkg_Target_BombardCannon_Count                118)
+(defconst vkg_Target_SiegeTower_Count                   119)
+(defconst vkg_Target_SpecialSiegeUnit_Count             120)
+
+(defconst vkg_Target_Scout_Count                        121)
+(defconst vkg_Target_Knight_Count                       122)
+(defconst vkg_Target_Camel_Count                        123)
+(defconst vkg_Target_SpecialStableUnit_Count            124)
+
+(defconst vkg_Target_Archer_Count                       125)
+(defconst vkg_Target_Skirmisher_Count                   126)
+(defconst vkg_Target_CavalryArcher_Count                127)
+(defconst vkg_Target_HandCannonneer_Count               128)
+(defconst vkg_Target_SpecialArcheryUnit_Count           129)
+
+(defconst vkg_Target_Militiaman_Count                   130)
+(defconst vkg_Target_Spearman_Count                     131)
+(defconst vkg_Target_Condottiero_Count                  132)
+(defconst vkg_Target_SpecialBarracksUnit_Count          133)
+
+; Buildings
+(defconst vkg_Target_TownCenter_Count                   134)
+(defconst vkg_Target_House_Count                        135)    ; except huns
+(defconst vkg_Target_Dock_Count                         136)
+(defconst vkg_Target_FishTrap_Count                     137)
+(defconst vkg_Target_Mill_Folwark_Count                 138)    ; poles
+(defconst vkg_Target_Farm_Count                         139)
+(defconst vkg_Target_LumberCamp_MuleCart_Count          140)    ; armenians and georgians
+(defconst vkg_Target_MiningCamp_MuleCart_Count          141)    ; armenians and georgians
+(defconst vkg_Target_Market_Count                       142)
+(defconst vkg_Target_Blacksmith_Count                   143)
+(defconst vkg_Target_Monastery_FortifiedChurch_Count    144)    ; armenians
+(defconst vkg_Target_University_Count                   145)
+(defconst vkg_Target_Wonder_Count                       146)
+(defconst vkg_Target_Barracks_Count                     147)
+(defconst vkg_Target_ArcheryRange_Count                 148)
+(defconst vkg_Target_Stable_Count                       149)    ; except aztecs, incans and mayans
+(defconst vkg_Target_SiegeWorkshop_Count                150)
+(defconst vkg_Target_Castle_Count                       151)
+(defconst vkg_Target_Tower_Count                        152)
+(defconst vkg_Target_Outpost_Count                      153)
+(defconst vkg_Target_SpecialBuilding_Count              154)    ; caravaserail persians and indians, donjon scicilians, krepost bulgarians, feitoria portugueses
+
+; ---- END Goals ----
+
+
+; ---- BEGIN Rules ----
+
+; Strategic numbers initialization
 (defrule
 	(true)
 =>
     (set-strategic-number sn-do-not-scale-for-difficulty-level  vkc_True)
     (set-strategic-number sn-initial-exploration-required       0)
     (set-strategic-number sn-cap-civilian-builders              200)
+    (set-strategic-number sn-enable-new-building-system         vkc_True)
     (set-strategic-number sn-cap-civilian-explorers             0)
     (set-strategic-number sn-number-explore-groups              1)
     (set-strategic-number sn-total-number-explorers             1)
@@ -50,12 +131,95 @@
 	(disable-self)
 )
 
+; Goals initialization
+(defrule    ; Units
+    (true)
+=>
+    (set-goal vkg_Target_Villager_Count 21)
+    (set-goal vkg_Target_TradeCart_Count 0)
+    (set-goal vkg_Target_Monk_Count 0)
+    (set-goal vkg_Target_SpecialMonasteryUnit_Count 0)
+    (set-goal vkg_Target_Trebuchet_Count 0)
+    (set-goal vkg_Target_Petard_Count 0)
+    (set-goal vkg_Target_SpecialCastleUnit_Count 0)
+    (set-goal vkg_Target_FishingShip_Count 0)
+    (set-goal vkg_Target_TradeCog_Count 0)
+    (set-goal vkg_Target_TransportShip_Count 0)
+    (set-goal vkg_Target_Galley_Count 0)
+    (set-goal vkg_Target_FireShip_Count 0)
+    (set-goal vkg_Target_DemolitionShip_Count 0)
+    (set-goal vkg_Target_CannonGalleon_Dromon_Count 0)
+    (set-goal vkg_Target_SpecialDockUnit_Count 0)
+    (set-goal vkg_Target_Ram_ArmoredElephant_Count 0)
+    (set-goal vkg_Target_Mangonel_Count 0)
+    (set-goal vkg_Target_Scorpion_Count 0)
+    (set-goal vkg_Target_BombardCannon_Count 0)
+    (set-goal vkg_Target_SiegeTower_Count 0)
+    (set-goal vkg_Target_SpecialSiegeUnit_Count 0)
+    (set-goal vkg_Target_Scout_Count 0)
+    (set-goal vkg_Target_Knight_Count 0)
+    (set-goal vkg_Target_Camel_Count 0)
+    (set-goal vkg_Target_SpecialStableUnit_Count 0)
+    (set-goal vkg_Target_Archer_Count 0)
+    (set-goal vkg_Target_Skirmisher_Count 0)
+    (set-goal vkg_Target_CavalryArcher_Count 0)
+    (set-goal vkg_Target_HandCannonneer_Count 0)
+    (set-goal vkg_Target_SpecialArcheryUnit_Count 0)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    (set-goal vkg_Target_Militiaman_Count 0)
+    (set-goal vkg_Target_Spearman_Count 0)
+    (set-goal vkg_Target_Condottiero_Count 0)
+    (set-goal vkg_Target_SpecialBarracksUnit_Count 0)
+    (disable-self)
+)
+
+(defrule    ; Buildings
+    (true)
+=>
+    (set-goal vkg_Target_TownCenter_Count 1)
+    (set-goal vkg_Target_House_Count 0)
+    (set-goal vkg_Target_Dock_Count 0)
+    (set-goal vkg_Target_FishTrap_Count 0)
+    (set-goal vkg_Target_Mill_Folwark_Count 0)
+    (set-goal vkg_Target_Farm_Count 0)
+    (set-goal vkg_Target_LumberCamp_MuleCart_Count 0)
+    (set-goal vkg_Target_MiningCamp_MuleCart_Count 0)
+    (set-goal vkg_Target_Market_Count 0)
+    (set-goal vkg_Target_Blacksmith_Count 0)
+    (set-goal vkg_Target_Monastery_FortifiedChurch_Count 0)
+    (set-goal vkg_Target_University_Count 0)
+    (set-goal vkg_Target_Wonder_Count 0)
+    (set-goal vkg_Target_Barracks_Count 0)
+    (set-goal vkg_Target_ArcheryRange_Count 0)
+    (set-goal vkg_Target_Stable_Count 0)
+    (set-goal vkg_Target_SiegeWorkshop_Count 0)
+    (set-goal vkg_Target_Castle_Count 0)
+    (set-goal vkg_Target_Tower_Count 0)
+    (set-goal vkg_Target_Outpost_Count 0)
+    (set-goal vkg_Target_SpecialBuilding_Count 0)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    (up-assign-builders c: house c: 2) ; we need 3 villagers to build two first houses during initialization phase
+    (disable-self)
+)
 
 
-(defconst vkc-max-villagers 150)
+
+;(defconst vkc-max-villagers 150)
 (defconst vkc-dark-age-villagers-count-for-lumber-camp 7)
 (defconst vkc-dark-age-villagers-count-for-mill 11)
 
+(defconst vkc_DarkAgeVillagersCount_FeudalRushStrat 21)
+(defconst vkc_DarkAgeVillagersCount_FastCastleStrat 26)
 
 
 (defrule
@@ -64,27 +228,94 @@
     (research feudal-age)
 )
 
-
+(defrule
+    (building-type-count-total town-center g:< vkg_Target_TownCenter_Count)
+    (can-build town-center)
+=>
+    (build town-center)
+)
 
 (defrule
-    (civilian-population < vkc-max-villagers)
+    (unit-type-count-total villager g:< vkg_Target_Villager_Count)
     (can-train villager)
 =>
     (train villager)
 )
 
+;(defconst vkg_House_Count 501)
+#load-if-not-defined HUN-CIV        ; huns do not need houses
 
+;(defrule
+;    (population-headroom > 0)
+;    (housing-headroom < vkc_HousingHeadroomLimit)
+;    (building-type-count house g:== vkg_Target_House_Count) ; TODO: good enough but there is an issue with wrong incremeting when house is destroyed while building or after being built
+;=>
+;    (up-modify-goal vkg_Target_House_Count c:+ 1)
+;    (up-chat-data-to-all "increase house target to: %d"   g: vkg_Target_House_Count)
+;)
 
-;#load-if-defined HUN-CIV        ; huns do not need houses
-;#else
+;(defrule
+;    (housing-headroom < vkc_HousingHeadroomLimit)
+;    (building-type-count-total house g:< vkg_Target_House_Count)
+;    (can-build house)
+;=>
+;    (build house)
+;)
+
 (defrule
-    (population-headroom > 0)   ; difference between population cap and current population
-    (housing-headroom < 2)      ; empty free spaces for new population
+    (population-headroom > 0)
+    (housing-headroom < vkc_HousingHeadroomLimit)
+=>
+    (up-get-fact population 0 vkg_Temp_ScopeLocalRule_0)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 c:/ 5)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 c:max 2) ; min 2 houses
+    (up-modify-goal vkg_Target_House_Count g:= vkg_Temp_ScopeLocalRule_0)
+)
+
+(defrule
+    (housing-headroom < vkc_HousingHeadroomLimit)
+    (building-type-count-total house g:< vkg_Target_House_Count)
     (can-build house)
 =>
     (build house)
 )
-;#end-if
+
+(defrule    ; remove the initial need of 3 villagers to build the two first houses
+    (up-compare-goal vkg_Target_House_Count > 2)    ; TODO: can be slightly improved
+=>
+    (up-assign-builders c: house c: 1)
+    (disable-self)
+)
+
+;(defconst vkg_Debug 500)
+;(defrule
+;    (true)
+;=>
+;    (up-get-fact building-type-count-total house vkg_Debug)
+;    (up-chat-data-to-all "house count: %d"   g: vkg_Debug)
+;)
+
+;(defrule 
+    ;(can-build house)
+;=>
+    ;(up-build place-point 0 c: house)
+    ;(build house)
+    ;(chat-to-all "build house")
+;)
+#end-if
+
+
+;(defconst gl-point-x 200)
+;(defconst gl-point-y 201)
+;(defconst gl-other-x 300)
+;(defconst gl-other-y 301)
+;(defrule
+;	(true)
+;=>
+;    (set-goal gl-point-x 10)
+;    (set-goal gl-other-x 50)
+;	(up-build-line gl-point-x gl-other-x c: palisade-wall)
+;)
 
 
 
@@ -127,3 +358,5 @@
     (up-chat-data-to-all "Loop count: %d"       g: vkg_LoopCount)
     (up-chat-data-to-all "Loop time (ms): %d"   g: vkg_LoopTimeMs)
 )
+
+; ---- END Rules ----
