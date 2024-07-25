@@ -16,7 +16,7 @@
 #load-if-defined ARMENIANS-CIV
 (defrule
     (resource-found wood)
-	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+	;(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -30,7 +30,7 @@
 #load-if-defined GEORGIANS-CIV
 (defrule
     (resource-found wood)
-	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+	;(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -47,7 +47,7 @@
     (building-type-count-total lumber-camp g:< vkg_TargetCount_LumberCamp_MuleCart)
     (can-build lumber-camp)
     (resource-found wood)
-	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+	;(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
 =>
     (build lumber-camp)
 )
@@ -55,7 +55,7 @@
 #end-if
 
 
-; House
+; House ; TODO: take town centers and castle into account when calculating the correct number of houses
 #load-if-not-defined HUN-CIV
 (defrule
     (population-headroom > 0)
@@ -86,7 +86,7 @@
 
 ; Farm  ; TODO: check if extra rules should not be put in the function which apply the TargetCount
 (defrule
-	(building-type-count-total house g:< vkg_TargetCount_Farm)
+	(building-type-count-total farm g:< vkg_TargetCount_Farm)
 	(idle-farm-count < vkc_IdleFarmCountLimit) 
     (or (building-type-count-total lumber-camp > 0) (building-type-count-total town-center > 0))
 	(can-build farm)
@@ -110,7 +110,7 @@
     (building-type-count-total mill g:< vkg_TargetCount_Mill_Folwark)
     (can-build mill)
     (resource-found food)
-	(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
+	;(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
 =>
     (build mill)
 )
@@ -121,7 +121,7 @@
     (building-type-count-total mill g:< vkg_TargetCount_Mill_Folwark)
     (can-build mill)
     (resource-found food)
-	(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
+	;(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
 =>
     (build mill)
 )
@@ -132,7 +132,7 @@
 #load-if-defined ARMENIANS-CIV
 (defrule
     (resource-found gold)
-	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+	;(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -146,7 +146,7 @@
 #load-if-defined GEORGIANS-CIV
 (defrule
     (resource-found gold)
-	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+	;(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -165,7 +165,7 @@
     (building-type-count-total mining-camp g:< vkg_Temp_ScopeLocalRule_0)
     (can-build mining-camp)
     (resource-found gold)
-	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+	;(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
 =>
     (build mining-camp)
 )
@@ -177,7 +177,7 @@
 #load-if-defined ARMENIANS-CIV
 (defrule
     (resource-found stone)
-	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+	;(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -191,7 +191,7 @@
 #load-if-defined GEORGIANS-CIV
 (defrule
     (resource-found stone)
-	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+	;(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
     (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
@@ -210,7 +210,7 @@
     (building-type-count-total mining-camp g:< vkg_Temp_ScopeLocalRule_0)
     (can-build mining-camp)
     (resource-found stone)
-	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+	;(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
 =>
     (build mining-camp)
 )
