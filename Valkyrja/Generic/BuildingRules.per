@@ -1,0 +1,408 @@
+; ---- BEGIN Buildings Rules ----
+; TODO: set rule to build forward
+; TODO: check case wood / gold / stone for armenians and georgians or gold / stone for all civs, we may want a gold mining camp but create a stone one at the moment need to fix that!!!!!
+; TODO: implement way to build palissades, walls and gates
+
+; Town Center
+(defrule
+    (building-type-count-total town-center g:< vkg_TargetCount_TownCenter)
+    (can-build town-center)
+=>
+    (build town-center)
+)
+
+
+; Lumber Camp   ; TODO: check if extra rules should not be put in the function which apply the TargetCount
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (resource-found wood)
+	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-defined GEORGIANS-CIV
+(defrule
+    (resource-found wood)
+	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-not-defined ARMENIANS-CIV
+#load-if-not-defined GEORGIANS-CIV
+(defrule
+    (building-type-count-total lumber-camp g:< vkg_TargetCount_LumberCamp_MuleCart)
+    (can-build lumber-camp)
+    (resource-found wood)
+	(dropsite-min-distance wood > vkc_DropsiteMinDistance_Wood)
+=>
+    (build lumber-camp)
+)
+#end-if
+#end-if
+
+
+; House
+#load-if-not-defined HUN-CIV
+(defrule
+    (population-headroom > 0)
+    (housing-headroom < vkc_HousingHeadroomLimit)
+=>
+    (up-get-fact population 0 vkg_Temp_ScopeLocalRule_0)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 c:/ 5)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 c:max 2) ; min 2 houses
+    (up-modify-goal vkg_TargetCount_House g:= vkg_Temp_ScopeLocalRule_0)
+)
+
+(defrule
+    (housing-headroom < vkc_HousingHeadroomLimit)
+    (building-type-count-total house g:< vkg_TargetCount_House)
+    (can-build house)
+=>
+    (build house)
+)
+
+(defrule    ; remove the initial need of 3 villagers to build the two first houses
+    (up-compare-goal vkg_TargetCount_House > 2)    ; TODO: can be slightly improved, right now after building first house a villager moves to help building the second house
+=>
+    (up-assign-builders c: house c: 1)
+    (disable-self)
+)
+#end-if
+
+
+; Farm  ; TODO: check if extra rules should not be put in the function which apply the TargetCount
+(defrule
+	(building-type-count-total house g:< vkg_TargetCount_Farm)
+	(idle-farm-count < vkc_IdleFarmCountLimit) 
+    (or (building-type-count-total lumber-camp > 0) (building-type-count-total town-center > 0))
+	(can-build farm)
+=>
+	(build farm)
+)
+
+
+; Fish Trap
+(defrule
+	(building-type-count-total fish-trap g:< vkg_TargetCount_FishTrap)
+	(can-build fish-trap)
+=>
+	(build fish-trap)
+)
+
+
+; Mill  ; TODO: check if extra rules should not be put in the function which apply the TargetCount
+#load-if-defined POLES-CIV
+(defrule    ; can use mill to count poles folwarks TODO: to check this information
+    (building-type-count-total mill g:< vkg_TargetCount_Mill_Folwark)
+    (can-build mill)
+    (resource-found food)
+	(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
+=>
+    (build mill)
+)
+#end-if
+
+#load-if-not-defined POLES-CIV
+(defrule
+    (building-type-count-total mill g:< vkg_TargetCount_Mill_Folwark)
+    (can-build mill)
+    (resource-found food)
+	(dropsite-min-distance food > vkc_DropsiteMinDistance_Food)
+=>
+    (build mill)
+)
+#end-if
+
+
+; Gold Mining Camp  ; TODO: check if extra rules should not be put in the function which apply the TargetCount
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (resource-found gold)
+	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-defined GEORGIANS-CIV
+(defrule
+    (resource-found gold)
+	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-not-defined ARMENIANS-CIV
+#load-if-not-defined GEORGIANS-CIV
+(defrule
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mining-camp g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mining-camp)
+    (resource-found gold)
+	(dropsite-min-distance gold > vkc_DropsiteMinDistance_Gold)
+=>
+    (build mining-camp)
+)
+#end-if
+#end-if
+
+
+; Stone Mining Camp ; TODO: check if extra rules should not be put in the function which apply the TargetCount
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (resource-found stone)
+	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-defined GEORGIANS-CIV
+(defrule
+    (resource-found stone)
+	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_LumberCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mule-cart g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mule-cart)
+=>
+    (build mule-cart)
+)
+#end-if
+
+#load-if-not-defined ARMENIANS-CIV
+#load-if-not-defined GEORGIANS-CIV
+(defrule
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:= vkg_TargetCount_GoldMiningCamp_MuleCart)
+    (up-modify-goal vkg_Temp_ScopeLocalRule_0 g:+ vkg_TargetCount_StoneMiningCamp_MuleCart)
+    (building-type-count-total mining-camp g:< vkg_Temp_ScopeLocalRule_0)
+    (can-build mining-camp)
+    (resource-found stone)
+	(dropsite-min-distance stone > vkc_DropsiteMinDistance_Stone)
+=>
+    (build mining-camp)
+)
+#end-if
+#end-if
+
+
+; Castle
+(defrule
+    (building-type-count-total castle g:< vkg_TargetCount_Castle)
+    (can-build castle)
+=>
+    (build castle)
+)
+
+
+; Dock
+(defrule
+	(building-type-count-total dock g:< vkg_TargetCount_Dock)
+	(can-build dock)
+=>
+	(build dock)
+)
+
+
+; Barracks
+(defrule
+	(building-type-count-total barracks g:< vkg_TargetCount_Barracks)
+	(can-build barracks)
+=>
+	(build barracks)
+)
+
+
+; Stable
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined INCAN-CIV
+#load-if-not-defined MAYAN-CIV
+(defrule
+	(building-type-count-total stable g:< vkg_TargetCount_Stable)
+	(can-build stable)
+=>
+	(build stable)
+)
+#end-if
+#end-if
+#end-if
+
+
+; Archery Range
+(defrule
+	(building-type-count-total archery-range g:< vkg_TargetCount_ArcheryRange)
+	(can-build archery-range)
+=>
+	(build archery-range)
+)
+
+
+; Siege Workshop
+(defrule
+	(building-type-count-total siege-workshop g:< vkg_TargetCount_SiegeWorkshop)
+	(can-build siege-workshop)
+=>
+	(build siege-workshop)
+)
+
+
+; Market
+(defrule
+	(building-type-count-total market g:< vkg_TargetCount_Market)
+	(can-build market)
+=>
+	(build market)
+)
+
+
+; Blacksmith
+(defrule
+	(building-type-count-total blacksmith g:< vkg_TargetCount_Blacksmith)
+	(can-build blacksmith)
+=>
+	(build blacksmith)
+)
+
+
+; University
+(defrule
+	(building-type-count-total university g:< vkg_TargetCount_University)
+	(can-build university)
+=>
+	(build university)
+)
+
+
+; Monastery ; TODO: fortified-church do not work for armenians???? temporarily use id 1806 instead
+#load-if-defined ARMENIANS-CIV
+(defrule
+	(building-type-count-total 1806 g:< vkg_TargetCount_Monastery_FortifiedChurch)
+	(can-build 1806)
+=>
+	(build 1806)
+)
+#else
+(defrule
+	(building-type-count-total monastery g:< vkg_TargetCount_Monastery_FortifiedChurch)
+	(can-build monastery)
+=>
+	(build monastery)
+)
+#end-if
+
+
+; Bombard Tower ; TODO: load only for necessary civs
+(defrule
+    (building-type-count-total bombard-tower g:< vkg_TargetCount_BombardTower)
+    (can-build bombard-tower)
+=>
+    (build bombard-tower)
+)
+
+
+; Tower ; TODO: load only for necessary civs
+(defrule
+    (building-type-count-total watch-tower-line g:< vkg_TargetCount_Tower)
+    (can-build watch-tower-line)
+=>
+    (build watch-tower-line)
+)
+
+
+; Outpost
+(defrule
+    (building-type-count-total outpost g:< vkg_TargetCount_Outpost)
+    (can-build outpost)
+=>
+    (build outpost)
+)
+
+
+; Special Building
+#load-if-defined SICILIANS-CIV
+(defrule
+    (building-type-count-total donjon g:< vkg_TargetCount_SpecialBuilding)
+    (can-build donjon)
+=>
+    (build donjon)
+)
+#end-if
+
+#load-if-defined BULGARIANS-CIV
+(defrule
+    (building-type-count-total krepost g:< vkg_TargetCount_SpecialBuilding)
+    (can-build krepost)
+=>
+    (build krepost)
+)
+#end-if
+
+#load-if-defined INDIAN-CIV
+(defrule
+    (building-type-count-total caravanserai g:< vkg_TargetCount_SpecialBuilding)
+    (can-build caravanserai)
+=>
+    (build caravanserai)
+)
+#end-if
+
+#load-if-defined PERSIAN-CIV
+(defrule
+    (building-type-count-total caravanserai g:< vkg_TargetCount_SpecialBuilding)
+    (can-build caravanserai)
+=>
+    (build caravanserai)
+)
+#end-if
+
+#load-if-defined PORTUGUESE-CIV
+(defrule
+    (building-type-count-total feitoria g:< vkg_TargetCount_SpecialBuilding)
+    (can-build feitoria)
+=>
+    (build feitoria)
+)
+#end-if
+
+
+; Wonder
+(defrule
+    (building-type-count-total wonder g:< vkg_TargetCount_Wonder)
+    (can-build wonder)
+=>
+    (build wonder)
+)
+
+; ---- END Buildings Rules ----
