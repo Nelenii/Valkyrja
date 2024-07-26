@@ -490,25 +490,25 @@
 
 #load-if-defined BOHEMIANS-CIV	
 (defrule 
-    (unit-type-count-total bombard-canon g:< vkg_TargetCount_BombardCannon)
-    (can-train bombard-canon-line)
+    (unit-type-count-total bombard-cannon g:< vkg_TargetCount_BombardCannon)
+    (can-train bombard-cannon)
 =>
-    (train bombard-canon-line)
+    (train bombard-cannon)
 )
 #else
 (defrule 
-    (unit-type-count-total bombard-canon g:< vkg_TargetCount_BombardCannon)
-    (can-train bombard-canon)
+    (unit-type-count-total bombard-cannon g:< vkg_TargetCount_BombardCannon)
+    (can-train bombard-cannon)
 =>
-    (train bombard-canon)
+    (train bombard-cannon)
 )
 #end-if
 
-(defrule
-    (unit-type-count-total siege-tower g:< vkg_TargetCount_SiegeTower)
-    (can-train siege-tower)
+(defrule    ; siege-tower keyword does not work replace it with its id
+    (unit-type-count-total 1105 g:< vkg_TargetCount_SiegeTower)
+    (can-train 1105)
 =>
-    (train siege-tower)
+    (train 1105)
 )
 
     
@@ -682,7 +682,7 @@
     (unit-type-count-total chakram-thrower-line g:< vkg_TargetCount_SpecialCastleUnit)
     (can-train chakram-thrower-line)
 =>
-    (train chakram-thrower-line
+    (train chakram-thrower-line)
 )
 #end-if
 
