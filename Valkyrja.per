@@ -88,7 +88,7 @@
 (defconst vkg_TargetCount_Archer                        125)
 (defconst vkg_TargetCount_Skirmisher                    126)
 (defconst vkg_TargetCount_CavalryArcher                 127)
-(defconst vkg_TargetCount_HandCannonneer                128)
+(defconst vkg_TargetCount_HandCannoneer                 128)
 (defconst vkg_TargetCount_SpecialArcheryUnit            129)
 
 (defconst vkg_TargetCount_Militiaman                    130)
@@ -198,7 +198,7 @@
     (set-goal vkg_TargetCount_Archer 0)
     (set-goal vkg_TargetCount_Skirmisher 0)
     (set-goal vkg_TargetCount_CavalryArcher 0)
-    (set-goal vkg_TargetCount_HandCannonneer 0)
+    (set-goal vkg_TargetCount_HandCannoneer 0)
     (set-goal vkg_TargetCount_SpecialArcheryUnit 0)
     (disable-self)
 )
@@ -331,19 +331,10 @@
 
 
 (load "Valkyrja/Generic/BuildingRules")
+(load "Valkyrja/Generic/UnitRules")
 
 
 
-; ---- BEGIN Units Rules ----
-
-(defrule
-    (unit-type-count-total villager g:< vkg_TargetCount_Villager)
-    (can-train villager)
-=>
-    (train villager)
-)
-
-; ---- END Units Rules ----
 
 ;(set-strategic-number sn-minimum-town-size 12)
 ;	(set-strategic-number sn-maximum-town-size 20)

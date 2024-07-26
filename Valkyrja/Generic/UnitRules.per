@@ -1,0 +1,965 @@
+; ---- BEGIN Units Rules ----
+
+; Town Center
+(defrule
+    (unit-type-count-total villager g:< vkg_TargetCount_Villager)
+    (can-train villager)
+=>
+    (train villager)
+)
+
+
+; Market
+(defrule
+    (unit-type-count-total trade-cart g:< vkg_TargetCount_TradeCart)
+    (can-train trade-cart)
+=>
+    (train trade-cart)
+)
+
+
+; Dock
+(defrule
+    (unit-type-count-total fishing-ship g:< vkg_TargetCount_FishingShip)
+    (can-train fishing-ship)
+=>
+    (train fishing-ship)
+)
+
+(defrule
+    (unit-type-count-total trade-cog g:< vkg_TargetCount_TradeCog)
+    (can-train trade-cog)
+=>
+    (train trade-cog)
+)
+
+(defrule
+    (unit-type-count-total transport-ship g:< vkg_TargetCount_TransportShip)
+    (can-train transport-ship)
+=>
+    (train transport-ship)
+)
+
+(defrule
+    (unit-type-count-total galley-line g:< vkg_TargetCount_Galley)
+    (can-train galley-line)
+=>
+    (train galley-line)
+)
+
+#load-if-not-defined VIKING-CIV
+(defrule
+    (unit-type-count-total fire-ship-line g:< vkg_TargetCount_FireShip)
+    (can-train fire-ship-line)
+=>
+    (train fire-ship-line)
+)
+#end-if
+
+#load-if-not-defined KOREAN-CIV
+(defrule
+    (unit-type-count-total demolition-ship-line g:< vkg_TargetCount_DemolitionShip)
+    (can-train demolition-ship-line)
+=>
+    (train demolition-ship-line)
+)
+#end-if
+
+#load-if-defined DRAVIDIANS-CIV
+(defrule    ; TODO: check this rule, it is working?
+    (unit-type-count-total thirisadai g:< vkg_TargetCount_SpecialDockUnit)
+    (can-train thirisadai)
+=>
+    (train thirisadai)
+)
+#end-if
+
+#load-if-defined KOREAN-CIV
+(defrule
+    (unit-type-count-total turtle-ship-line g:< vkg_TargetCount_SpecialDockUnit)
+    (can-train turtle-ship-line)
+=>
+    (train turtle-ship-line)
+)
+#end-if
+
+#load-if-defined PORTUGUESE-CIV
+(defrule
+    (unit-type-count-total caravel-line g:< vkg_TargetCount_SpecialDockUnit)
+    (can-train caravel-line)
+=>
+    (train caravel-line)
+)
+#end-if
+
+#load-if-defined VIKING-CIV
+(defrule
+    (unit-type-count-total longboat-line g:< vkg_TargetCount_SpecialDockUnit)
+    (can-train longboat-line)
+=>
+    (train longboat-line)
+)
+#end-if
+
+; TODO: check if the cannon galleon / dromon rule works for every civ
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined INCAN-CIV
+#load-if-not-defined MAYAN-CIV
+#load-if-not-defined CUMANS
+
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (unit-type-count-total dromon g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train dromon)
+=>
+    (train dromon)
+)
+#end-if
+
+#load-if-defined BYZANTINE-CIV
+(defrule
+    (unit-type-count-total dromon g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train dromon)
+=>
+    (train dromon)
+)
+#end-if
+
+#load-if-defined HUN-CIV
+(defrule
+    (unit-type-count-total dromon g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train dromon)
+=>
+    (train dromon)
+)
+#end-if
+
+#load-if-defined GOTHIC-CIV
+(defrule
+    (unit-type-count-total dromon g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train dromon)
+=>
+    (train dromon)
+)
+#end-if
+
+#load-if-defined ROMANS-CIV
+(defrule
+    (unit-type-count-total dromon g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train dromon)
+=>
+    (train dromon)
+)
+#else
+    #load-if-not-defined ARMENIANS-CIV
+    #load-if-not-defined BYZANTINE-CIV
+    #load-if-not-defined HUN-CIV
+    #load-if-not-defined GOTHIC-CIV
+    (defrule
+    (unit-type-count-total cannon-galleon-line g:< vkg_TargetCount_CannonGalleon_Dromon)
+    (can-train cannon-galleon-line)
+    =>
+        (train cannon-galleon-line)
+    )
+    #end-if
+    #end-if
+    #end-if
+    #end-if
+#end-if
+
+#end-if
+#end-if
+#end-if
+#end-if
+
+
+; Stable
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined INCAN-CIV
+#load-if-not-defined MAYAN-CIV
+(defrule
+    (unit-type-count-total scout-cavalry-line g:< vkg_TargetCount_Scout)
+    (can-train scout-cavalry-line)
+=>
+    (train scout-cavalry-line)
+)
+
+(defrule
+    (unit-type-count-total knight-line g:< vkg_TargetCount_Knight)
+    (can-train knight-line)
+=>
+    (train knight-line)
+)
+
+(defrule
+    (unit-type-count-total camel-line g:< vkg_TargetCount_Camel)
+    (can-train camel-line)
+=>
+    (train camel-line)
+)
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (unit-type-count-total shrivamsha-rider-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train shrivamsha-rider-line)
+=>
+    (train shrivamsha-rider-line)
+)
+#end-if
+
+#load-if-defined CUMANS-CIV
+(defrule
+    (unit-type-count-total steppe-lancer-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train steppe-lancer-line)
+=>
+    (train steppe-lancer-line)
+)
+#end-if
+
+#load-if-defined MONGOL-CIV
+(defrule
+    (unit-type-count-total steppe-lancer-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train steppe-lancer-line)
+=>
+    (train steppe-lancer-line)
+)
+#end-if
+
+#load-if-defined TATARS-CIV
+(defrule
+    (unit-type-count-total steppe-lancer-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train steppe-lancer-line)
+=>
+    (train steppe-lancer-line)
+)
+#end-if
+
+#load-if-defined BENGALIS-CIV
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+
+#load-if-defined BURMESE-CIV    ; TODO: check if this information is correct
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+#load-if-defined DRAVIDIANS-CIV
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+#load-if-defined KHMER-CIV
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+#load-if-defined MALAY-CIV
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+#load-if-defined VIETNAMESE-CIV
+(defrule
+    (unit-type-count-total battle-elephant-line g:< vkg_TargetCount_SpecialStableUnit)
+    (can-train battle-elephant-line)
+=>
+    (train battle-elephant-line)
+)
+#end-if
+#end-if
+#end-if
+#end-if
+; TODO: check if need tarkan for huns
+
+
+; Barracks
+(defrule
+    (unit-type-count-total militiaman-line g:< vkg_TargetCount_Militiaman)
+    (can-train militiaman-line)
+=>
+    (train militiaman-line)
+)
+
+(defrule
+    (unit-type-count-total spearman-line g:< vkg_TargetCount_Spearman)
+    (can-train spearman-line)
+=>
+    (train spearman-line)
+)
+
+(defrule    ; all civs can train condottieri if allied player is italian
+    (unit-type-count-total condottiero g:< vkg_TargetCount_Condottiero)
+    (can-train condottiero)
+=>
+    (train condottiero)
+)
+
+#load-if-defined AZTEC-CIV
+(defrule
+    (unit-type-count-total eagle-warrior-line g:< vkg_TargetCount_SpecialBarracksUnit)
+    (can-train eagle-warrior-line)
+=>
+    (train eagle-warrior-line)
+)
+#end-if
+
+#load-if-defined INCAN-CIV
+(defrule
+    (unit-type-count-total eagle-warrior-line g:< vkg_TargetCount_SpecialBarracksUnit)
+    (can-train eagle-warrior-line)
+=>
+    (train eagle-warrior-line)
+)
+#end-if
+
+#load-if-defined MAYAN-CIV
+(defrule
+    (unit-type-count-total eagle-warrior-line g:< vkg_TargetCount_SpecialBarracksUnit)
+    (can-train eagle-warrior-line)
+=>
+    (train eagle-warrior-line)
+)
+#end-if
+
+#load-if-defined BURGUNDIANS-CIV
+(defrule
+    (unit-type-count-total flemish-pikeman g:< vkg_TargetCount_SpecialBarracksUnit)
+    (can-train flemish-pikeman)
+=>
+    (train flemish-pikeman)
+)
+#end-if
+; TODO: check if need to add huskarls for goths
+
+
+; Archery Range
+(defrule
+    (unit-type-count-total archer-line g:< vkg_TargetCount_Archer)
+    (can-train archer-line)
+=>
+    (train archer-line)
+)
+
+(defrule
+    (unit-type-count-total skirmisher-line g:< vkg_TargetCount_Skirmisher)
+    (can-train skirmisher-line)
+=>
+    (train skirmisher-line)
+)
+
+(defrule
+    (unit-type-count-total cavalry-archer-line g:< vkg_TargetCount_CavalryArcher)
+    (can-train cavalry-archer-line)
+=>
+    (train cavalry-archer-line)
+)
+
+(defrule
+    (unit-type-count-total hand-cannoneer g:< vkg_TargetCount_HandCannoneer)
+    (can-train hand-cannoneer)
+=>
+    (train hand-cannoneer)
+)
+
+#load-if-defined BERBERS-CIV
+(defrule
+    (unit-type-count-total genitour-line g:< vkg_TargetCount_SpecialArcheryUnit)
+    (can-train genitour-line)
+=>
+    (train genitour-line)
+)
+#end-if
+
+#load-if-defined BENGALIS-CIV
+(defrule
+    (unit-type-count-total elephant-archer-line g:< vkg_TargetCount_SpecialArcheryUnit)
+    (can-train elephant-archer-line)
+=>
+    (train elephant-archer-line)
+)
+#end-if
+
+#load-if-defined DRAVIDIANS-CIV
+(defrule
+    (unit-type-count-total elephant-archer-line g:< vkg_TargetCount_SpecialArcheryUnit)
+    (can-train elephant-archer-line)
+=>
+    (train elephant-archer-line)
+)
+#end-if
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (unit-type-count-total elephant-archer-line g:< vkg_TargetCount_SpecialArcheryUnit)
+    (can-train elephant-archer-line)
+=>
+    (train elephant-archer-line)
+)
+#end-if
+
+#load-if-defined INCAN-CIV
+(defrule
+    (unit-type-count-total slinger g:< vkg_TargetCount_SpecialArcheryUnit)
+    (can-train slinger)
+=>
+    (train slinger)
+)
+#end-if
+
+
+; Siege Workshop
+#load-if-defined BENGALIS-CIV
+(defrule
+    (unit-type-count-total armored-elephant-line g:< vkg_TargetCount_Ram_ArmoredElephant)
+    (can-train armored-elephant-line)
+=>
+    (train armored-elephant-line)
+)
+#end-if
+
+#load-if-defined DRAVIDIANS-CIV
+(defrule
+    (unit-type-count-total armored-elephant-line g:< vkg_TargetCount_Ram_ArmoredElephant)
+    (can-train armored-elephant-line)
+=>
+    (train armored-elephant-line)
+)
+#end-if
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (unit-type-count-total armored-elephant-line g:< vkg_TargetCount_Ram_ArmoredElephant)
+    (can-train armored-elephant-line)
+=>
+    (train armored-elephant-line)
+)
+#end-if
+
+#load-if-defined INDIAN-CIV
+(defrule
+    (unit-type-count-total armored-elephant-line g:< vkg_TargetCount_Ram_ArmoredElephant)
+    (can-train armored-elephant-line)
+=>
+    (train armored-elephant-line)
+)
+#else
+    #load-if-not-defined BENGALIS-CIV
+    #load-if-not-defined DRAVIDIANS-CIV
+    #load-if-not-defined GURJARAS-CIV
+    (defrule
+    (unit-type-count-total battering-ram-line g:< vkg_TargetCount_Ram_ArmoredElephant)
+        (can-train battering-ram-line)
+    =>
+        (train battering-ram-line)
+    )
+    #end-if
+    #end-if
+    #end-if
+#end-if
+
+(defrule
+    (unit-type-count-total mangonel-line g:< vkg_TargetCount_Mangonel)
+    (can-train mangonel-line)
+=>
+    (train mangonel-line)
+)
+
+(defrule
+    (unit-type-count-total scorpion-line g:< vkg_TargetCount_Scorpion)
+    (can-train scorpion-line)
+=>
+    (train scorpion-line)
+)
+
+#load-if-defined BOHEMIANS-CIV	
+(defrule 
+    (unit-type-count-total bombard-canon g:< vkg_TargetCount_BombardCannon)
+    (can-train bombard-canon-line)
+=>
+    (train bombard-canon-line)
+)
+#else
+(defrule 
+    (unit-type-count-total bombard-canon g:< vkg_TargetCount_BombardCannon)
+    (can-train bombard-canon)
+=>
+    (train bombard-canon)
+)
+#end-if
+
+(defrule
+    (unit-type-count-total siege-tower g:< vkg_TargetCount_SiegeTower)
+    (can-train siege-tower)
+=>
+    (train siege-tower)
+)
+
+    
+; TODO: check if need konnick krepost for bulgarian and donjon serjeant donjon spearman for scicilian
+
+; Castle
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (unit-type-count-total composite-bowman-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train composite-bowman-line)
+=>
+    (train composite-bowman-line)
+)
+#end-if
+
+#load-if-defined AZTEC-CIV
+(defrule
+    (unit-type-count-total jaguar-man-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train jaguar-man-line)
+=>
+    (train jaguar-man-line)
+)
+#end-if
+
+#load-if-defined BENGALIS-CIV
+(defrule
+    (unit-type-count-total ratha-ranged-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train ratha-ranged-line)
+=>
+    (train ratha-ranged-line)
+)
+#end-if
+
+#load-if-defined BERBERS-CIV
+(defrule
+    (unit-type-count-total camel-archer-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train camel-archer-line)
+=>
+    (train camel-archer-line)
+)
+#end-if
+
+#load-if-defined BRITON-CIV
+(defrule
+    (unit-type-count-total  longbowman-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train longbowman-line)
+=>
+    (train longbowman-line)
+)
+#end-if
+
+#load-if-defined BOHEMIANS-CIV
+(defrule
+    (unit-type-count-total	hussite-wagon-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train hussite-wagon-line)
+=>
+    (train hussite-wagon-line)
+)
+#end-if
+
+#load-if-defined BULGARIANS-CIV
+(defrule
+    (unit-type-count-total konnik-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train konnik-line)
+=>
+    (train konnik-line)
+)
+#end-if
+
+#load-if-defined BURGUNDIANS-CIV
+(defrule
+    (unit-type-count-total coustillier-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train coustillier-line)
+=>
+    (train coustillier-line)
+)
+#end-if
+
+#load-if-defined BURMESE-CIV
+(defrule
+    (unit-type-count-total arambai-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train 	arambai-line)
+=>
+    (train arambai-line)
+)
+#end-if
+
+#load-if-defined BYZANTINE-CIV
+(defrule
+    (unit-type-count-total cataphract-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train cataphract-line)
+=>
+    (train cataphract-line)
+)
+#end-if
+
+#load-if-defined CELTIC-CIV
+(defrule
+    (unit-type-count-total woad-raider-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train woad-raider-line)
+=>
+    (train woad-raider-line)
+)
+#end-if
+
+#load-if-defined CHINESE-CIV
+(defrule
+    (unit-type-count-total chu-ko-nu-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train chu-ko-nu-line)
+=>
+    (train chu-ko-nu-line)
+)
+#end-if
+
+#load-if-defined CUMANS-CIV
+(defrule
+    (unit-type-count-total kipchak-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train kipchak-line)
+=>
+    (train kipchak-line)
+)
+#end-if
+
+#load-if-defined DRAVIDIANS-CIV
+(defrule
+    (unit-type-count-total urumi-swordsman-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train urumi-swordsman-line)
+=>
+    (train urumi-swordsman-line)
+)
+#end-if
+
+#load-if-defined ETHIOPIAN-CIV
+(defrule
+    (unit-type-count-total shotel-warrior-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train shotel-warrior-line)
+=>
+    (train shotel-warrior-line)
+)
+#end-if
+
+#load-if-defined FRANKISH-CIV
+(defrule
+    (unit-type-count-total throwing-axeman-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train throwing-axeman-line)
+=>
+    (train throwing-axeman-line)
+)
+#end-if
+
+#load-if-defined GEORGIANS-CIV
+(defrule
+    (unit-type-count-total monaspa-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train	monaspa-line)
+=>
+    (train monaspa-line)
+)
+#end-if
+
+#load-if-defined GOTHIC-CIV
+(defrule
+    (unit-type-count-total huskarl-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train huskarl-line)
+=>
+    (train huskarl-line)
+)
+#end-if
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (unit-type-count-total chakram-thrower-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train chakram-thrower-line)
+=>
+    (train chakram-thrower-line
+)
+#end-if
+
+#load-if-defined HUN-CIV
+(defrule
+    (unit-type-count-total tarkan-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train tarkan-line)
+=>
+    (train tarkan-line)
+)
+#end-if
+
+#load-if-defined INCAN-CIV
+(defrule
+    (unit-type-count-total kamayuk-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train kamayuk-line)
+=>
+    (train kamayuk-line)
+)
+#end-if
+
+#load-if-defined INDIAN-CIV
+(defrule
+    (unit-type-count-total ghulam-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train ghulam-line)
+=>
+    (train ghulam-line)
+)
+#end-if
+
+#load-if-defined ITALIAN-CIV
+(defrule
+    (unit-type-count-total genoese-crossbowman-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train genoese-crossbowman-line)
+=>
+    (train genoese-crossbowman-line)
+)
+#end-if
+
+#load-if-defined JAPANESE-CIV
+(defrule
+    (unit-type-count-total samurai-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train samurai-line)
+=>
+    (train samurai-line)
+)
+#end-if
+
+#load-if-defined KHMER-CIV
+(defrule
+    (unit-type-count-total ballista-elephant-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train ballista-elephant-line)
+=>
+    (train ballista-elephant-line)
+)
+#end-if
+
+#load-if-defined KOREAN-CIV
+(defrule
+    (unit-type-count-total war-wagon-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train war-wagon-line)
+=>
+    (train war-wagon-line)
+)
+#end-if
+
+#load-if-defined LITHUANIANS-CIV
+(defrule
+    (unit-type-count-total leitis-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train leitis-line)
+=>
+    (train leitis-line)
+)
+#end-if
+
+#load-if-defined MAGYAR-CIV
+(defrule
+    (unit-type-count-total magyar-huszar-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train magyar-huszar-line)
+=>
+    (train magyar-huszar-line)
+)
+#end-if
+
+#load-if-defined MALAY-CIV
+(defrule
+    (unit-type-count-total karambit-warrior-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train karambit-warrior-line)
+=>
+    (train karambit-warrior-line)
+)
+#end-if
+
+#load-if-defined MALIAN-CIV
+(defrule
+    (unit-type-count-total gbeto-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train gbeto-line)
+=>
+    (train gbeto-line)
+)
+#end-if
+
+#load-if-defined MAYAN-CIV
+(defrule
+    (unit-type-count-total plumed-archer-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train plumed-archer-line)
+=>
+    (train plumed-archer-line)
+)
+#end-if
+
+#load-if-defined MONGOL-CIV
+(defrule
+    (unit-type-count-total mangudai-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train mangudai-line)
+=>
+    (train mangudai-line)
+)
+#end-if
+
+#load-if-defined PERSIAN-CIV
+(defrule
+    (unit-type-count-total war-elephant-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train war-elephant-line)
+=>
+    (train war-elephant-line)
+)
+#end-if
+
+#load-if-defined POLES-CIV
+(defrule
+    (unit-type-count-total obuch-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train obuch-line)
+=>
+    (train obuch-line)
+)
+#end-if
+
+#load-if-defined PORTUGUESE-CIV
+(defrule
+    (unit-type-count-total organ-gun-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train organ-gun-line)
+=>
+    (train organ-gun-line)
+)
+#end-if
+
+#load-if-defined ROMANS-CIV
+(defrule
+    (unit-type-count-total centurion-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train centurion-line)
+=>
+    (train centurion-line)
+)
+#end-if
+
+#load-if-defined SARACEN-CIV
+(defrule
+    (unit-type-count-total mameluke-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train mameluke-line)
+=>
+    (train mameluke-line)
+)
+#end-if
+
+#load-if-defined SICILIANS-CIV
+(defrule
+    (unit-type-count-total serjeant-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train serjeant-line)
+=>
+    (train serjeant-line)
+)
+#end-if
+
+#load-if-defined SLAVIC-CIV
+(defrule
+    (unit-type-count-total boyar-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train boyar-line)
+=>
+    (train boyar-line)
+)
+#end-if
+
+#load-if-defined SPANISH-CIV
+(defrule
+    (unit-type-count-total conquistador-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train conquistador-line)
+=>
+    (train conquistador-line)
+)
+#end-if
+
+#load-if-defined TATARS-CIV
+(defrule
+    (unit-type-count-total keshik-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train keshik-line)
+=>
+    (train keshik-line)
+)
+#end-if
+
+#load-if-defined TEUTONIC-CIV
+(defrule
+    (unit-type-count-total teutonic-knight-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train teutonic-knight-line)
+=>
+    (train teutonic-knight-line)
+)
+#end-if
+
+#load-if-defined TURKISH-CIV
+(defrule
+    (unit-type-count-total janissary-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train janissary-line)
+=>
+    (train janissary-line)
+)
+#end-if
+
+#load-if-defined VIETNAMESE-CIV
+(defrule
+    (unit-type-count-total rattan-archer-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train rattan-archer-line)
+=>
+    (train rattan-archer-line)
+)
+#end-if
+
+
+#load-if-defined VIKING-CIV
+(defrule
+    (unit-type-count-total berserk-line g:< vkg_TargetCount_SpecialCastleUnit)
+    (can-train berserk-line)
+=>
+    (train berserk-line)
+)
+#end-if
+
+(defrule
+    (unit-type-count-total trebuchet g:< vkg_TargetCount_Trebuchet)
+    (can-train trebuchet)
+=>
+    (train trebuchet)
+)
+
+(defrule
+    (unit-type-count-total petard g:< vkg_TargetCount_Petard)
+    (can-train petard)
+=>
+    (train petard)
+)
+
+
+; Monastery
+#load-if-defined ARMENIANS-CIV
+(defrule
+    (unit-type-count-total warrior-priest g:< vkg_TargetCount_SpecialMonasteryUnit)
+    (can-train warrior-priest)
+=>
+    (train warrior-priest)
+)
+#end-if
+
+#load-if-defined SPANISH-CIV
+(defrule
+    (unit-type-count-total missionary g:< vkg_TargetCount_SpecialMonasteryUnit)
+    (can-train missionary)
+=>
+    (train missionary)
+)
+#end-if
+
+(defrule
+    (unit-type-count-total monk g:< vkg_TargetCount_Monk)
+    (can-train monk)
+=>
+    (train monk)
+)
+
+; ---- END Units Rules ----
