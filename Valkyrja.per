@@ -121,7 +121,62 @@
 (defconst vkg_TargetCount_Outpost                       155)
 (defconst vkg_TargetCount_SpecialBuilding               156)    ; caravaserail persians and indians, donjon scicilians, krepost bulgarians, feitoria portugueses
 
+; Researches -> usage of per reseach bit flags
+(defconst vkg_Target_Researches_TownCenter              157)
+(defconst vkg_Target_Researches_Mill                    158)
+(defconst vkg_Target_Researches_LumberCamp              159)
+(defconst vkg_Target_Researches_MiningCamp              160)
+(defconst vkg_Target_Researches_Market                  161)
+(defconst vkg_Target_Researches_Blacksmith              162)
+(defconst vkg_Target_Researches_Monastery               163)
+(defconst vkg_Target_Researches_University              164)
+(defconst vkg_Target_Researches_Dock                    165)
+(defconst vkg_Target_Researches_Castle                  166)
+(defconst vkg_Target_Researches_Barracks                167)
+(defconst vkg_Target_Researches_ArcheryRange            168)
+(defconst vkg_Target_Researches_Stable                  169)
+(defconst vkg_Target_Researches_SiegeWorkshop           170)
+
 ; ---- END Goals ----
+
+
+
+; ---- BEGIN Flags ----
+
+; Town Center
+(defconst vkf_Research_TownCenter_Loom 1)
+(defconst vkf_Research_TownCenter_FeudalAge 2)
+(defconst vkf_Research_TownCenter_CastleAge 4)
+(defconst vkf_Research_TownCenter_ImperialAge 8)
+(defconst vkf_Research_TownCenter_TownWatch 16)
+(defconst vkf_Research_TownCenter_TownPatrol 32)
+(defconst vkf_Research_TownCenter_Wheelbarrow 64)
+(defconst vkf_Research_TownCenter_HandCart 128)
+
+; Mill
+(defconst vkf_Research_Mill_HorseCollar 1)
+(defconst vkf_Research_Mill_HeavyPlow 2)
+(defconst vkf_Research_Mill_CropRotation 4)
+
+; Lumber Camp
+(defconst vkf_Research_LumberCamp_DoubleBitAxe 1)
+(defconst vkf_Research_LumberCamp_BowSaw 2)
+(defconst vkf_Research_LumberCamp_TwoMenSaw 4)
+
+; Mining Camp
+; Market
+; Blacksmith
+; Monastery
+; University
+; Dock
+; Castle
+; Barracks
+; Archery Range
+; Stable
+; Siege Workshop
+
+; ---- END Flags ----
+
 
 
 ; ---- BEGIN Rules ----
@@ -249,6 +304,26 @@
     (disable-self)
 )
 
+(defrule    ; Researches
+    (true)
+=>
+    (set-goal vkg_Target_Researches_TownCenter 0)
+    (set-goal vkg_Target_Researches_Mill 0)
+    (set-goal vkg_Target_Researches_LumberCamp 0)
+    (set-goal vkg_Target_Researches_MiningCamp 0)
+    (set-goal vkg_Target_Researches_Market 0)
+    (set-goal vkg_Target_Researches_Blacksmith 0)
+    (set-goal vkg_Target_Researches_Monastery 0)
+    (set-goal vkg_Target_Researches_University 0)
+    (set-goal vkg_Target_Researches_Dock 0)
+    (set-goal vkg_Target_Researches_Castle 0)
+    (set-goal vkg_Target_Researches_Barracks 0)
+    (set-goal vkg_Target_Researches_ArcheryRange 0)
+    (set-goal vkg_Target_Researches_Stable 0)
+    (set-goal vkg_Target_Researches_SiegeWorkshop 0)
+    (set-goal vkg_Target_Researches_TownCenter 0)
+    (disable-self)
+)
 
 
 ;(defconst vkc-max-villagers 150)
@@ -256,80 +331,10 @@
 (defconst vkc-dark-age-villagers-count-for-mill 11)
 
 
-; ---- BEGIN Researches Rules ----
-
-; Town Center
-(defrule
-    (current-age == dark-age)
-    (up-compare-goal vkg_TargetCount_Age c:>= vkc_FeudalAge)
-    (can-research-with-escrow feudal-age)
-=>
-    (set-goal vkg_TargetCount_Age 2)
-    (release-escrow food)
-    (research feudal-age)
-    (set-goal vkg_TargetCount_Villager 30)
-    (set-goal vkg_TargetCount_Farm 10)
-    (set-goal vkg_TargetCount_LumberCamp_MuleCart 2)
-    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 1)
-    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 1)
-    (set-goal vkg_TargetCount_Market 1)
-    (set-goal vkg_TargetCount_Blacksmith 1)
-    (set-goal vkg_TargetCount_Barracks 1)
-    (set-goal vkg_TargetCount_ArcheryRange 1)
-    (set-goal vkg_TargetCount_Stable 1)
-    (set-strategic-number sn-food-gatherer-percentage 55)
-	(set-strategic-number sn-wood-gatherer-percentage 30)
-	(set-strategic-number sn-gold-gatherer-percentage 10)
-	(set-strategic-number sn-stone-gatherer-percentage 5)
-)
 
 
 
-(defrule
-    (current-age == feudal-age)
-    (up-compare-goal vkg_TargetCount_Age c:>= vkc_CastleAge)
-    (can-research-with-escrow castle-age)
-=>
-    (set-goal vkg_TargetCount_Age 3)
-    (release-escrow food)
-    (release-escrow gold)
-    (research castle-age)
-    (set-goal vkg_TargetCount_Villager 120)
-    (set-goal vkg_TargetCount_Farm 40)
-    (set-goal vkg_TargetCount_TownCenter 3)
-    (set-goal vkg_TargetCount_LumberCamp_MuleCart 4)
-    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 2)
-    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 2)
-    (set-goal vkg_TargetCount_Monastery_FortifiedChurch 1)
-    (set-goal vkg_TargetCount_University 1)
-    (set-goal vkg_TargetCount_SiegeWorkshop 1)
-    (set-goal vkg_TargetCount_Castle 1)
-    (set-goal vkg_TargetCount_Barracks 3)
-    (set-goal vkg_TargetCount_ArcheryRange 3)
-    (set-goal vkg_TargetCount_Stable 3)
-    (set-strategic-number sn-food-gatherer-percentage 30)
-	(set-strategic-number sn-wood-gatherer-percentage 30)
-	(set-strategic-number sn-gold-gatherer-percentage 30)
-	(set-strategic-number sn-stone-gatherer-percentage 10)
-)
-
-
-
-(defrule
-    (current-age == castle-age)
-    (up-compare-goal vkg_TargetCount_Age c:>= vkc_ImperialAge)
-    (can-research-with-escrow imperial-age)
-=>
-    (release-escrow food)
-    (release-escrow gold)
-    (research imperial-age)
-    (set-goal vkg_TargetCount_Villager 200)
-)
-
-; ---- END Researches Rules ----
-
-
-
+(load "Valkyrja/Generic/ResearchRules")
 (load "Valkyrja/Generic/BuildingRules")
 (load "Valkyrja/Generic/UnitRules")
 

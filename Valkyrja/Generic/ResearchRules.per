@@ -1,0 +1,110 @@
+; Town Center
+(defrule
+    (current-age == dark-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_FeudalAge)
+    (can-research-with-escrow feudal-age)
+=>
+    (set-goal vkg_TargetCount_Age 2)
+    (release-escrow food)
+    (research feudal-age)
+    (set-goal vkg_TargetCount_Villager 30)
+    (set-goal vkg_TargetCount_Farm 10)
+    (set-goal vkg_TargetCount_LumberCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 1)
+    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 1)
+    (set-goal vkg_TargetCount_Market 1)
+    (set-goal vkg_TargetCount_Blacksmith 1)
+    (set-goal vkg_TargetCount_Barracks 1)
+    (set-goal vkg_TargetCount_ArcheryRange 1)
+    (set-goal vkg_TargetCount_Stable 1)
+    (set-strategic-number sn-food-gatherer-percentage 55)
+	(set-strategic-number sn-wood-gatherer-percentage 30)
+	(set-strategic-number sn-gold-gatherer-percentage 10)
+	(set-strategic-number sn-stone-gatherer-percentage 5)
+)
+
+
+
+(defrule
+    (current-age == feudal-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_CastleAge)
+    (can-research-with-escrow castle-age)
+=>
+    (set-goal vkg_TargetCount_Age 3)
+    (release-escrow food)
+    (release-escrow gold)
+    (research castle-age)
+    (set-goal vkg_TargetCount_Villager 120)
+    (set-goal vkg_TargetCount_Farm 40)
+    (set-goal vkg_TargetCount_TownCenter 3)
+    (set-goal vkg_TargetCount_LumberCamp_MuleCart 4)
+    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_Monastery_FortifiedChurch 1)
+    (set-goal vkg_TargetCount_University 1)
+    (set-goal vkg_TargetCount_SiegeWorkshop 1)
+    (set-goal vkg_TargetCount_Castle 1)
+    (set-goal vkg_TargetCount_Barracks 3)
+    (set-goal vkg_TargetCount_ArcheryRange 3)
+    (set-goal vkg_TargetCount_Stable 3)
+    (set-strategic-number sn-food-gatherer-percentage 30)
+	(set-strategic-number sn-wood-gatherer-percentage 30)
+	(set-strategic-number sn-gold-gatherer-percentage 30)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+)
+
+
+
+(defrule
+    (current-age == castle-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_ImperialAge)
+    (can-research-with-escrow imperial-age)
+=>
+    (release-escrow food)
+    (release-escrow gold)
+    (research imperial-age)
+    (set-goal vkg_TargetCount_Villager 200)
+)
+
+
+
+
+; test flags
+(defconst vkg_TestFlag 500)
+(defconst vkf_FirstTest 1)
+(defconst vkf_SecondTest 2)
+(defconst vkf_ThirdTest 4)
+
+
+(defrule
+    (true)
+=>
+    (set-goal vkg_TestFlag 0)
+    (up-chat-data-to-all "Test Flag = %d"   g: vkg_TestFlag)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    (up-modify-flag vkg_TestFlag c:+ vkf_SecondTest)
+    (up-modify-flag vkg_TestFlag c:+ vkf_ThirdTest)
+    ;(up-chat-data-to-all "Test Flag = %d"   g: vkg_TestFlag)
+)
+
+(defrule
+    (up-compare-flag vkg_TestFlag == vkf_ThirdTest)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    ;(up-modify-flag vkg_TestFlag c:- vkf_SecondTest)
+    (chat-to-all "True 3")
+)
+
+(defrule
+    (up-compare-flag vkg_TestFlag == vkf_SecondTest)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    ;(up-modify-flag vkg_TestFlag c:- vkf_SecondTest)
+    (chat-to-all "True 2")
+)
