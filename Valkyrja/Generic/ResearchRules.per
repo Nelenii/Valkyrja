@@ -1,4 +1,78 @@
 ; Town Center
+
+; Barracks
+
+; Stable
+
+; Archery Range
+
+; Siege Workshop
+
+; Castle
+
+; Univesity
+
+; Monastery
+
+; Blacksmith
+
+; Market
+
+; Dock
+
+; Mill
+
+; Lumber Camp
+(defrule
+    (can-research ri-double-bit-axe)
+    (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_DoubleBitAxe)
+=>
+    (research ri-double-bit-axe)
+)
+
+(defrule
+    (can-research ri-bow-saw)
+    (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_BowSaw)
+=>
+    (research ri-bow-saw)
+)
+
+(defrule
+    (can-research ri-two-man-saw)
+    (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_TwoManSaw)
+=>
+    (research ri-two-man-saw)
+)
+
+; Mining Camp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; Town Center
 (defrule
     (current-age == dark-age)
     (up-compare-goal vkg_TargetCount_Age c:>= vkc_FeudalAge)
