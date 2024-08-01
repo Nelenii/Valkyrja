@@ -1,6 +1,6 @@
 ; Town Center
 (defrule
-    (can-research ri-loom)
+    (can-research-with-escrow ri-loom)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_Loom)
 =>
     (research ri-loom)
@@ -21,35 +21,35 @@
 )
 
 (defrule
-    (can-research-with-escrow imperial-age)
+    (can-research-with-escrow-with imperial-age)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_ImperialAge)
 =>
     (research imperial-age)
 )
 
 (defrule
-    (can-research ri-town-watch)
+    (can-research-with-escrow ri-town-watch)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_TownWatch)
 =>
     (research ri-town-watch)
 )
 
 (defrule
-    (can-research ri-town-patrol)
+    (can-research-with-escrow ri-town-patrol)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_TownPatrol)
 =>
     (research ri-town-patrol)
 )
 
 (defrule
-    (can-research ri-wheel-barrow)
+    (can-research-with-escrow ri-wheel-barrow)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_Wheelbarrow)
 =>
     (research ri-wheel-barrow)
 )
 
 (defrule
-    (can-research ri-hand-cart)
+    (can-research-with-escrow ri-hand-cart)
     (up-compare-flag vkg_Target_Researches_TownCenter == vkf_Research_TownCenter_HandCart)
 =>
     (research ri-hand-cart)
@@ -58,21 +58,21 @@
 
 ; Mill
 (defrule
-    (can-research ri-horse-collar)
+    (can-research-with-escrow ri-horse-collar)
     (up-compare-flag vkg_Target_Researches_Mill == vkf_Research_Mill_HorseCollar)
 =>
     (research ri-horse-collar)
 )
 
 (defrule
-    (can-research ri-heavy-plow)
+    (can-research-with-escrow ri-heavy-plow)
     (up-compare-flag vkg_Target_Researches_Mill == vkf_Research_Mill_HeavyPlow)
 =>
     (research ri-heavy-plow)
 )
 
 (defrule
-    (can-research ri-crop-rotation)
+    (can-research-with-escrow ri-crop-rotation)
     (up-compare-flag vkg_Target_Researches_Mill == vkf_Research_Mill_CropRotation)
 =>
     (research ri-crop-rotation)
@@ -81,21 +81,21 @@
 
 ; Lumber Camp
 (defrule
-    (can-research ri-double-bit-axe)
+    (can-research-with-escrow ri-double-bit-axe)
     (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_DoubleBitAxe)
 =>
     (research ri-double-bit-axe)
 )
 
 (defrule
-    (can-research ri-bow-saw)
+    (can-research-with-escrow ri-bow-saw)
     (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_BowSaw)
 =>
     (research ri-bow-saw)
 )
 
 (defrule
-    (can-research ri-two-man-saw)
+    (can-research-with-escrow ri-two-man-saw)
     (up-compare-flag vkg_Target_Researches_LumberCamp == vkf_Research_LumberCamp_TwoManSaw)
 =>
     (research ri-two-man-saw)
@@ -104,28 +104,28 @@
 
 ; Mining Camp
 (defrule
-    (can-research ri-gold-mining)
+    (can-research-with-escrow ri-gold-mining)
     (up-compare-flag vkg_Target_Researches_MiningCamp == vkf_Research_MiningCamp_GoldMining)
 =>
     (research ri-gold-mining)
 )
 
 (defrule
-    (can-research ri-gold-shaft-mining)
+    (can-research-with-escrow ri-gold-shaft-mining)
     (up-compare-flag vkg_Target_Researches_MiningCamp == vkf_Research_MiningCamp_GoldShaftMining)
 =>
     (research ri-gold-shaft-mining)
 )
 
 (defrule
-    (can-research ri-stone-mining)
+    (can-research-with-escrow ri-stone-mining)
     (up-compare-flag vkg_Target_Researches_MiningCamp == vkf_Research_MiningCamp_StoneMining)
 =>
     (research ri-stone-mining)
 )
 
 (defrule
-    (can-research ri-stone-shaft-mining)
+    (can-research-with-escrow ri-stone-shaft-mining)
     (up-compare-flag vkg_Target_Researches_MiningCamp == vkf_Research_MiningCamp_StoneShaftMining)
 =>
     (research ri-stone-shaft-mining)
@@ -133,112 +133,362 @@
 
 
 ; Barracks
-(defconst vkg_Target_Researches_Barracks                167)
+(defrule
+    (can-research-with-escrow ri-man-at-arms)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_ManAtArms)
+=>
+    (research ri-man-at-arms)
+)
+
+(defrule
+    (can-research-with-escrow ri-long-swordsman)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_LongSwordsman)
+=>
+    (research ri-long-swordsman)
+)
+
+(defrule
+    (can-research-with-escrow ri-two-handed-swordsman)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_TwoHandedSwordsman)
+=>
+    (research ri-two-handed-swordsman)
+)
+
+#load-if-defined ROMANS-CIV
+(defrule
+    (can-research-with-escrow ri-legionary)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Champion)
+=>
+    (research ri-legionary)
+)
+#else
+(defrule
+    (can-research-with-escrow ri-champion)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Champion)
+=>
+    (research ri-champion)
+)
+#end-if
+
+(defrule
+    (can-research-with-escrow ri-pikeman)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Pikeman)
+=>
+    (research ri-pikeman)
+)
+
+(defrule
+    (can-research-with-escrow ri-halberdier)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Halberdier)
+=>
+    (research ri-halberdier)
+)
+
+#load-if-defined AZTEC-CIV
+(defrule
+    (can-research-with-escrow ri-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_SpecialUnit)
+=>
+    (research ri-eagle-warrior)
+)
+
+(defrule
+    (can-research-with-escrow ri-elite-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_EliteSpecialUnit)
+=>
+    (research ri-elite-eagle-warrior)
+)
+#end-if
+
+#load-if-defined INCAN-CIV
+(defrule
+    (can-research-with-escrow ri-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_SpecialUnit)
+=>
+    (research ri-eagle-warrior)
+)
+
+(defrule
+    (can-research-with-escrow ri-elite-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_EliteSpecialUnit)
+=>
+    (research ri-elite-eagle-warrior)
+)
+#end-if
+
+#load-if-defined MAYAN-CIV
+(defrule
+    (can-research-with-escrow ri-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_SpecialUnit)
+=>
+    (research ri-eagle-warrior)
+)
+
+(defrule
+    (can-research-with-escrow ri-elite-eagle-warrior)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_EliteSpecialUnit)
+=>
+    (research ri-elite-eagle-warrior)
+)   
+#end-if
+
+(defrule
+    (can-research-with-escrow ri-supplies)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Supplies)
+=>
+    (research ri-supplies)
+)
+
+(defrule
+    (can-research-with-escrow ri-gambesons)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Gambesons)
+=>
+    (research ri-gambesons)
+)
+
+(defrule
+    (can-research-with-escrow ri-tracking)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Tracking)
+=>
+    (research ri-tracking)
+)
+
+(defrule
+    (can-research-with-escrow ri-squires)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Squires)
+=>
+    (research ri-squires)
+)
+
+(defrule
+    (can-research-with-escrow ri-arson)
+    (up-compare-flag vkg_Target_Researches_Barracks == vkf_Research_Barracks_Arson)
+=>
+    (research ri-arson)
+)
 
 
 ; Stable
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined INCAN-CIV
+#load-if-not-defined MAYAN-CIV
+#end-if
+#end-if
+#end-if
 (defconst vkg_Target_Researches_Stable                  169)
-
+(defconst vkf_Research_Stable_LightCavalry 1)
+(defconst vkf_Research_Stable_Hussar 2)     ; or winged hussar for poles (and magyards?)
+(defconst vkf_Research_Stable_Cavalier 4)
+(defconst vkf_Research_Stable_Paladin 8)   ; or savar for persian
+(defconst vkf_Research_Stable_HeavyCamel 16)
+(defconst vkf_Research_Stable_Bloodlines 32)
+(defconst vkf_Research_Stable_Husbandry 64)
+(defconst vkf_Research_Stable_EliteSpecialUnit 128)   ; imperial camel for hindustanis, or battle elephant or steppe lancer, shrivamsha for gurjaras
 
 ; Archery Range
-(defconst vkg_Target_Researches_ArcheryRange            168)
+(defrule
+    (can-research-with-escrow ri-crossbow)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_Crossbow)
+=>
+    (research ri-crossbow)
+)
+
+(defrule
+    (can-research-with-escrow ri-arbalest)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_Arbalest)
+=>
+    (research ri-arbalest)
+)
+
+(defrule
+    (can-research-with-escrow ri-elite-skirmisher)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSkirmisher)
+=>
+    (research ri-elite-skirmisher)
+)
+
+(defrule
+    (can-research-with-escrow ri-heavy-cavalry-archer)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_HeavyCavalryArcher)
+=>
+    (research ri-heavy-cavalry-archer)
+)
+
+(defrule
+    (can-research-with-escrow ri-hand-cannon)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_HandCannon)
+=>
+    (research ri-hand-cannon)
+)
+
+(defrule
+    (can-research-with-escrow ri-thumb-ring)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_ThumbRing)
+=>
+    (research ri-thumb-ring)
+)
+
+(defrule
+    (can-research-with-escrow ri-parthian-tactics)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_PartianTactics)
+=>
+    (research ri-parthian-tactics)
+)
+
+#load-if-defined BERBERS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-genitour)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSpecialUnit)
+=>
+    (research ri-elite-genitour)
+)
+#end-if
+
+#load-if-defined VIETNAMESE-CIV
+(defrule
+    (can-research-with-escrow ri-imperial-skirmisher)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSpecialUnit)
+=>
+    (research ri-imperial-skirmisher)
+)
+#end-if
+
+#load-if-defined BENGALIS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-elephant-archer)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSpecialUnit)
+=>
+    (research ri-elite-elephant-archer)
+)
+#end-if
+
+#load-if-defined DRAVIDIANS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-elephant-archer)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSpecialUnit)
+=>
+    (research ri-elite-elephant-archer)
+)
+#end-if
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-elephant-archer)
+    (up-compare-flag vkg_Target_Researches_ArcheryRange == vkf_Research_ArcheryRange_EliteSpecialUnit)
+=>
+    (research ri-elite-elephant-archer)
+)
+#end-if
 
 
 ; Siege Workshop
 (defconst vkg_Target_Researches_SiegeWorkshop           170)
-
+(defconst vkf_Research_SiegeWorkshop_CappedRam 1)
+(defconst vkf_Research_SiegeWorkshop_SiegeRam 2)
+(defconst vkf_Research_SiegeWorkshop_SiegeElephant 4) ; TODO: merge with the two above
+(defconst vkf_Research_SiegeWorkshop_Onager 8)
+(defconst vkf_Research_SiegeWorkshop_SiegeOnager 16)
+(defconst vkf_Research_SiegeWorkshop_HeavyScorpion 32)
+(defconst vkf_Research_SiegeWorkshop_BombardCannon 64)
+(defconst vkf_Research_SiegeWorkshop_EliteSpecialUnit 128)  ; houfnice for bohemian
 
 ; Castle
 (defconst vkg_Target_Researches_Castle                  166)
-
+(defconst vkf_Research_Castle_EliteSpecialUnit 1)
+(defconst vkf_Research_Castle_CastleAgeSpecialTech 2)
+(defconst vkf_Research_Castle_ImperialAgeSpecialTech 4)
+(defconst vkf_Research_Castle_Conscription 8)
+(defconst vkf_Research_Castle_Hoardings 16)
+(defconst vkf_Research_Castle_Sappers 32)
+(defconst vkf_Research_Castle_SpiesTreason 64)
 
 ; Univesity
 (defrule
-    (can-research ri-masonry)
+    (can-research-with-escrow ri-masonry)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Masonry)
 =>
     (research ri-masonry)
 )
 
 (defrule
-    (can-research ri-architecture)
+    (can-research-with-escrow ri-architecture)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Architecture)
 =>
     (research ri-architecture)
 )
 
 (defrule
-    (can-research ri-fortified-wall)
+    (can-research-with-escrow ri-fortified-wall)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_FortifiedWall)
 =>
     (research ri-fortified-wall)
 )
 
 (defrule
-    (can-research ri-guard-tower)
+    (can-research-with-escrow ri-guard-tower)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_GuardTower)
 =>
     (research ri-guard-tower)
 )
 
 (defrule
-    (can-research ri-keep)
+    (can-research-with-escrow ri-keep)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Keep)
 =>
     (research ri-keep)
 )
 
 (defrule
-    (can-research ri-ballistics)
+    (can-research-with-escrow ri-ballistics)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Ballistics)
 =>
     (research ri-ballistics)
 )
 
 (defrule
-    (can-research ri-heated-shot)
+    (can-research-with-escrow ri-heated-shot)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_HeatedShot)
 =>
     (research ri-heated-shot)
 )
 
 (defrule
-    (can-research ri-murder-holes)
+    (can-research-with-escrow ri-murder-holes)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_MurderHoles)
 =>
     (research ri-murder-holes)
 )
 
 (defrule
-    (can-research ri-stonecutting)
+    (can-research-with-escrow ri-stonecutting)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_TreadmillCrane)
 =>
     (research ri-stonecutting)
 )
 
 (defrule
-    (can-research ri-arrowslits)
+    (can-research-with-escrow ri-arrowslits)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Arrowslits)
 =>
     (research ri-arrowslits)
 )
 
 (defrule
-    (can-research ri-siege-engineers)
+    (can-research-with-escrow ri-siege-engineers)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_SiegeEngineers)
 =>
     (research ri-siege-engineers)
 )
 
 (defrule
-    (can-research ri-chemistry)
+    (can-research-with-escrow ri-chemistry)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_Chemistry)
 =>
     (research ri-chemistry)
 )
 
 (defrule
-    (can-research ri-bombard-tower)
+    (can-research-with-escrow ri-bombard-tower)
     (up-compare-flag vkg_Target_Researches_University == vkf_Research_University_BombardTower)
 =>
     (research ri-bombard-tower)
@@ -247,77 +497,77 @@
 
 ; Monastery
 (defrule
-    (can-research ri-devotion)
+    (can-research-with-escrow ri-devotion)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Devotion)
 =>
     (research ri-devotion)
 )
 
 (defrule
-    (can-research ri-faith)
+    (can-research-with-escrow ri-faith)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Faith)
 =>
     (research ri-faith)
 )
 
 (defrule
-    (can-research ri-atonement)
+    (can-research-with-escrow ri-atonement)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Atonement)
 =>
     (research ri-atonement)
 )
 
 (defrule
-    (can-research ri-fervor)
+    (can-research-with-escrow ri-fervor)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Fervor)
 =>
     (research ri-fervor)
 )
 
 (defrule
-    (can-research ri-herbal-medicine)
+    (can-research-with-escrow ri-herbal-medicine)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_HerbalMedicine)
 =>
     (research ri-herbal-medicine)
 )
 
 (defrule
-    (can-research ri-heresy)
+    (can-research-with-escrow ri-heresy)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Heresy)
 =>
     (research ri-heresy)
 )
 
 (defrule
-    (can-research ri-redemption)
+    (can-research-with-escrow ri-redemption)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Redemption)
 =>
     (research ri-redemption)
 )
 
 (defrule
-    (can-research ri-sanctity)
+    (can-research-with-escrow ri-sanctity)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Sanctity)
 =>
     (research ri-sanctity)
 )
 
 (defrule
-    (can-research ri-block-printing)
+    (can-research-with-escrow ri-block-printing)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_BlockPrinting)
 =>
     (research ri-block-printing)
 )
 
 (defrule
-    (can-research ri-illumination)
+    (can-research-with-escrow ri-illumination)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Illumination)
 =>
     (research ri-illumination)
 )
 
 (defrule
-    (can-research ri-theocracy)
+    (can-research-with-escrow ri-theocracy)
     (up-compare-flag vkg_Target_Researches_Monastery == vkf_Research_Monastery_Theocracy)
 =>
     (research ri-theocracy)
@@ -326,105 +576,105 @@
 
 ; Blacksmith
 (defrule
-    (can-research ri-forging)
+    (can-research-with-escrow ri-forging)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_Forging)
 =>
     (research ri-forging)
 )
 
 (defrule
-    (can-research ri-iron-casting)
+    (can-research-with-escrow ri-iron-casting)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_IronCasting)
 =>
     (research ri-iron-casting)
 )
 
 (defrule
-    (can-research ri-blast-furnace)
+    (can-research-with-escrow ri-blast-furnace)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_BlastFurnace)
 =>
     (research ri-blast-furnace)
 )
 
 (defrule
-    (can-research ri-fletching)
+    (can-research-with-escrow ri-fletching)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_Fletching)
 =>
     (research ri-fletching)
 )
 
 (defrule
-    (can-research ri-bodkin-arrow)
+    (can-research-with-escrow ri-bodkin-arrow)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_BodkinArrow)
 =>
     (research ri-bodkin-arrow)
 )
 
 (defrule
-    (can-research ri-bracer)
+    (can-research-with-escrow ri-bracer)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_Bracer)
 =>
     (research ri-bracer)
 )
 
 (defrule
-    (can-research ri-scale-mail)
+    (can-research-with-escrow ri-scale-mail)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_ScaleMail)
 =>
     (research ri-scale-mail)
 )
 
 (defrule
-    (can-research ri-chain-mail)
+    (can-research-with-escrow ri-chain-mail)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_ChainMail)
 =>
     (research ri-chain-mail)
 )
 
 (defrule
-    (can-research ri-plate-mail)
+    (can-research-with-escrow ri-plate-mail)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_PlateMail)
 =>
     (research ri-plate-mail)
 )
 
 (defrule
-    (can-research ri-padded-archer-armor)
+    (can-research-with-escrow ri-padded-archer-armor)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_PaddedArcherArmor)
 =>
     (research ri-padded-archer-armor)
 )
 
 (defrule
-    (can-research ri-leather-archer-armor)
+    (can-research-with-escrow ri-leather-archer-armor)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_LeatherArcherArmor)
 =>
     (research ri-leather-archer-armor)
 )
 
 (defrule
-    (can-research ri-ring-archer-armor)
+    (can-research-with-escrow ri-ring-archer-armor)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_RingArcherArmor)
 =>
     (research ri-ring-archer-armor)
 )
 
 (defrule
-    (can-research ri-scale-barding)
+    (can-research-with-escrow ri-scale-barding)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_ScaleBarding)
 =>
     (research ri-scale-barding)
 )
 
 (defrule
-    (can-research ri-chain-barding)
+    (can-research-with-escrow ri-chain-barding)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_Chainbarding)
 =>
     (research ri-chain-barding)
 )
 
 (defrule
-    (can-research ri-plate-barding)
+    (can-research-with-escrow ri-plate-barding)
     (up-compare-flag vkg_Target_Researches_Blacksmith == vkf_Research_Blacksmith_PlateBarding)
 =>
     (research ri-plate-barding)
@@ -433,28 +683,28 @@
 
 ; Market
 (defrule
-    (can-research ri-caravan)
+    (can-research-with-escrow ri-caravan)
     (up-compare-flag vkg_Target_Researches_Market == vkf_Research_Market_Caravan)
 =>
     (research ri-caravan)
 )
 
 (defrule
-    (can-research ri-coinage)
+    (can-research-with-escrow ri-coinage)
     (up-compare-flag vkg_Target_Researches_Market == vkf_Research_Market_Coinage)
 =>
     (research ri-coinage)
 )
 
 (defrule
-    (can-research ri-banking)
+    (can-research-with-escrow ri-banking)
     (up-compare-flag vkg_Target_Researches_Market == vkf_Research_Market_Banking)
 =>
     (research ri-banking)
 )
 
 (defrule
-    (can-research ri-guilds)
+    (can-research-with-escrow ri-guilds)
     (up-compare-flag vkg_Target_Researches_Market == vkf_Research_Market_Guilds)
 =>
     (research ri-guilds)
@@ -463,7 +713,17 @@
 
 ; Dock
 (defconst vkg_Target_Researches_Dock                    165)
-
+(defconst vkf_Research_Dock_WarGalley 1)
+(defconst vkf_Research_Dock_Galleon 2)
+(defconst vkf_Research_Dock_FastFireShip 4)
+(defconst vkf_Research_Dock_HeavyDemolitionShip 8)
+(defconst vkf_Research_Dock_CannonGalleon 16)
+(defconst vkf_Research_Dock_EliteCannonGalleon 32)  ; deckguns
+(defconst vkf_Research_Dock_EliteSpecialUnit 64)
+(defconst vkf_Research_Dock_Gillnets 128)
+(defconst vkf_Research_Dock_Careening 256)
+(defconst vkf_Research_Dock_DryDock 512)
+(defconst vkf_Research_Dock_ShipWright 1024)
 
 
 
@@ -480,7 +740,7 @@
 (defrule
     (current-age == dark-age)
     (up-compare-goal vkg_TargetCount_Age c:>= vkc_FeudalAge)
-    (can-research-with-escrow feudal-age)
+    (can-research-with-escrow-with-escrow feudal-age)
 =>
     (set-goal vkg_TargetCount_Age 2)
     (release-escrow food)
@@ -506,7 +766,7 @@
 (defrule
     (current-age == feudal-age)
     (up-compare-goal vkg_TargetCount_Age c:>= vkc_CastleAge)
-    (can-research-with-escrow castle-age)
+    (can-research-with-escrow-with-escrow castle-age)
 =>
     (set-goal vkg_TargetCount_Age 3)
     (release-escrow food)
@@ -536,7 +796,7 @@
 (defrule
     (current-age == castle-age)
     (up-compare-goal vkg_TargetCount_Age c:>= vkc_ImperialAge)
-    (can-research-with-escrow imperial-age)
+    (can-research-with-escrow-with-escrow imperial-age)
 =>
     (release-escrow food)
     (release-escrow gold)
