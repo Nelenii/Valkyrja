@@ -272,18 +272,185 @@
 #load-if-not-defined AZTEC-CIV
 #load-if-not-defined INCAN-CIV
 #load-if-not-defined MAYAN-CIV
+
+#load-if-not-defined TEUTONIC-CIV
+
+(defrule
+    (can-research-with-escrow ri-light-cavalry)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_LightCavalry)
+=>
+    (research ri-light-cavalry)
+)
+
+#load-if-not-defined POLES-CIV
+#load-if-not-defined LITHUANIANS-CIV
+(defrule
+    (can-research-with-escrow ri-hussar)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Hussar)
+=>
+    (research ri-hussar)
+)
+#end-if
+#end-if
+
+#load-if-defined POLES-CIV
+(defrule
+    (can-research-with-escrow ri-winged-hussar)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Hussar)
+=>
+    (research ri-hussar)
+)
+#end-if
+
+#load-if-defined LITHUANIANS-CIV
+(defrule
+    (can-research-with-escrow ri-winged-hussar)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Hussar)
+=>
+    (research ri-hussar)
+)
+#end-if
+
+#end-if
+
+(defrule
+    (can-research-with-escrow ri-cavalier)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Cavalier)
+=>
+    (research ri-cavalier)
+)
+
+#load-if-defined PERSIAN-CIV
+(defrule
+    (can-research-with-escrow ri-savar)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Paladin)
+=>
+    (research ri-savar)
+)
+#else
+(defrule
+    (can-research-with-escrow ri-paladin)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Paladin)
+=>
+    (research ri-paladin)
+)
+#end-if
+
+(defrule
+    (can-research-with-escrow ri-heavy-camel)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_HeavyCamel)
+=>
+    (research ri-heavy-camel)
+)
+
+(defrule
+    (can-research-with-escrow ri-bloodlines)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Bloodlines)
+=>
+    (research ri-bloodlines)
+)
+
+(defrule
+    (can-research-with-escrow ri-husbandry)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_Husbandry)
+=>
+    (research ri-husbandry)
+)
+
+#load-if-defined INDIAN-CIV
+(defrule
+    (can-research-with-escrow ri-imperial-camel)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-imperial-camel)
+)
+#end-if
+
+#load-if-defined GURJARAS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-shrivamsha-rider)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-shrivamsha-rider)
+)
+#end-if
+
+#load-if-defined CUMANS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-steppe-lancer)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-steppe-lancer)
+)
+#end-if
+
+#load-if-defined MONGOL-CIV
+(defrule
+    (can-research-with-escrow ri-elite-steppe-lancer)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-steppe-lancer)
+)
+#end-if
+
+#load-if-defined TATARS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-steppe-lancer)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-steppe-lancer)
+)
+#end-if
+
+#load-if-defined BENGALIS-CIV
+(defrule
+    (can-research-with-escrow ri-elite-battle-elephant)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-battle-elephant)
+)
+#end-if
+
+#load-if-defined BURMESE-CIV
+(defrule
+    (can-research-with-escrow ri-elite-battle-elephant)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-battle-elephant)
+)
+#end-if
+
+#load-if-defined KHMER-CIV
+(defrule
+    (can-research-with-escrow ri-elite-battle-elephant)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-battle-elephant)
+)
+#end-if
+
+#load-if-defined MALAY-CIV
+(defrule
+    (can-research-with-escrow ri-elite-battle-elephant)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-battle-elephant)
+)
+#end-if
+
+#load-if-defined VIETNAMESE-CIV
+(defrule
+    (can-research-with-escrow ri-elite-battle-elephant)
+    (up-compare-flag vkg_Target_Researches_Stable == vkf_Research_Stable_EliteSpecialUnit)
+=>
+    (research ri-elite-battle-elephant)
+)
+#end-if
+
 #end-if
 #end-if
 #end-if
-(defconst vkg_Target_Researches_Stable                  169)
-(defconst vkf_Research_Stable_LightCavalry 1)
-(defconst vkf_Research_Stable_Hussar 2)     ; or winged hussar for poles (and magyards?)
-(defconst vkf_Research_Stable_Cavalier 4)
-(defconst vkf_Research_Stable_Paladin 8)   ; or savar for persian
-(defconst vkf_Research_Stable_HeavyCamel 16)
-(defconst vkf_Research_Stable_Bloodlines 32)
-(defconst vkf_Research_Stable_Husbandry 64)
-(defconst vkf_Research_Stable_EliteSpecialUnit 128)   ; imperial camel for hindustanis, or battle elephant or steppe lancer, shrivamsha for gurjaras
+
 
 ; Archery Range
 (defrule
@@ -382,9 +549,23 @@
 
 
 ; Siege Workshop
-(defconst vkg_Target_Researches_SiegeWorkshop           170)
-(defconst vkf_Research_SiegeWorkshop_CappedRam 1)
-(defconst vkf_Research_SiegeWorkshop_SiegeRam 2)
+(defrule ; TODO: merge with siege elephant!!!!
+    (can-research-with-escrow ri-capped-ram)
+    (up-compare-flag vkg_Target_Researches_SiegeWorkshop == vkf_Research_SiegeWorkshop_CappedRam)
+=>
+    (research ri-capped-ram)
+)
+
+(defrule
+    (can-research-with-escrow ri-siege)
+    (up-compare-flag vkg_Target_Researches_SiegeWorkshop == vkf_Research_SiegeWorkshop_SiegeRam)
+=>
+    (research ri-capped-ram)
+)
+
+(defconst            170)
+(defconst  1)
+(defconst  2)
 (defconst vkf_Research_SiegeWorkshop_SiegeElephant 4) ; TODO: merge with the two above
 (defconst vkf_Research_SiegeWorkshop_Onager 8)
 (defconst vkf_Research_SiegeWorkshop_SiegeOnager 16)
@@ -397,10 +578,35 @@
 (defconst vkf_Research_Castle_EliteSpecialUnit 1)
 (defconst vkf_Research_Castle_CastleAgeSpecialTech 2)
 (defconst vkf_Research_Castle_ImperialAgeSpecialTech 4)
-(defconst vkf_Research_Castle_Conscription 8)
-(defconst vkf_Research_Castle_Hoardings 16)
-(defconst vkf_Research_Castle_Sappers 32)
-(defconst vkf_Research_Castle_SpiesTreason 64)
+
+(defrule
+    (can-research-with-escrow ri-conscription)
+    (up-compare-flag vkg_Target_Researches_Castle == vkf_Research_Castle_Conscription)
+=>
+    (research ri-conscription)
+)
+
+(defrule
+    (can-research-with-escrow ri-hoardings)
+    (up-compare-flag vkg_Target_Researches_Castle == vkf_Research_Castle_Hoardings)
+=>
+    (research ri-hoardings)
+)
+
+(defrule
+    (can-research-with-escrow ri-sappers)
+    (up-compare-flag vkg_Target_Researches_Castle == vkf_Research_Castle_Sappers)
+=>
+    (research ri-sappers)
+)
+
+(defrule
+    (can-research-with-escrow ri-spies)
+    (up-compare-flag vkg_Target_Researches_Castle == vkf_Research_Castle_SpiesTreason)
+=>
+    (research ri-spies)
+)
+
 
 ; Univesity
 (defrule
@@ -712,19 +918,78 @@
 
 
 ; Dock
-(defconst vkg_Target_Researches_Dock                    165)
-(defconst vkf_Research_Dock_WarGalley 1)
-(defconst vkf_Research_Dock_Galleon 2)
-(defconst vkf_Research_Dock_FastFireShip 4)
-(defconst vkf_Research_Dock_HeavyDemolitionShip 8)
+(defrule
+    (can-research-with-escrow ri-war-galley)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_WarGalley)
+=>
+    (research ri-war-galley)
+)
+
+#load-if-not-defined AZTEC-CIV
+#load-if-not-defined MALIAN-CIV
+(defrule
+    (can-research-with-escrow ri-galleon)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_Galleon)
+=>
+    (research ri-galleon)
+)
+#end-if
+#end-if
+
+#load-if-not-defined VIKING-CIV
+(defrule
+    (can-research-with-escrow ri-fast-fire-ship)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_FastFireShip)
+=>
+    (research ri-fast-fire-ship)
+)
+#end-if
+
+#load-if-not-defined KOREAN-CIV
+(defrule
+    (can-research-with-escrow ri-heavy-demolition-ship)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_HeavyDemolitionShip)
+=>
+    (research ri-heavy-demolition-ship)
+)
+#end-if
+
+(defconst  8)
 (defconst vkf_Research_Dock_CannonGalleon 16)
 (defconst vkf_Research_Dock_EliteCannonGalleon 32)  ; deckguns
 (defconst vkf_Research_Dock_EliteSpecialUnit 64)
-(defconst vkf_Research_Dock_Gillnets 128)
-(defconst vkf_Research_Dock_Careening 256)
-(defconst vkf_Research_Dock_DryDock 512)
-(defconst vkf_Research_Dock_ShipWright 1024)
+(defconst  128)
+(defconst  256)
+(defconst  512)
+(defconst  1024)
 
+(defrule
+    (can-research-with-escrow ri-gillnets)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_Gillnets)
+=>
+    (research ri-gillnets)
+)
+
+(defrule
+    (can-research-with-escrow ri-careening)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_Careening)
+=>
+    (research ri-careening)
+)
+
+(defrule
+    (can-research-with-escrow ri-dry-dock)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_DryDock)
+=>
+    (research ri-dry-dock)
+)
+
+(defrule
+    (can-research-with-escrow ri-shipwright)
+    (up-compare-flag vkg_Target_Researches_Dock == vkf_Research_Dock_ShipWright)
+=>
+    (research ri-shipwright)
+)
 
 
 
