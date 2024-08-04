@@ -1,0 +1,208 @@
+(defconst vkg_GameTimestamp 1)
+(defconst vkg_LoopCount 2)
+(defconst vkg_LoopTimeMs 3)
+
+(defconst vkg_Temp0 4)
+(defconst vkg_Temp_ScopeLocalRule_0 10)
+
+; Strategy
+; add fun strategies as well like town center etc...
+(defconst vkg_Strategy_AllIn 91)
+(defconst vkg_Strategy_AggressiveTownCenter 92)
+(defconst vkg_Strategy_DarkRush 93) ; steps from 0 to x to build the strategy  % 2 => 0 deactivated 1 => activated
+(defconst vkg_Strategy_FeudalRush 94)
+(defconst vkg_Strategy_FastCastle 95)
+(defconst vkg_StrategyEconomicBoom 96)
+(defconst vkg_Strategy_FastImperial 97)
+(defconst vkg_Strategy_LateGame 98)
+
+(defconst vkg_TargetCount_Age                           99)
+
+; Units
+(defconst vkg_TargetCount_Villager                      100)
+
+(defconst vkg_TargetCount_TradeCart                     101)
+
+(defconst vkg_TargetCount_Monk                          102)    
+(defconst vkg_TargetCount_SpecialMonasteryUnit          103)
+
+(defconst vkg_TargetCount_Trebuchet                     104)
+(defconst vkg_TargetCount_Petard                        105)
+(defconst vkg_TargetCount_SpecialCastleUnit             106)
+
+(defconst vkg_TargetCount_FishingShip                   107)
+(defconst vkg_TargetCount_TradeCog                      108)
+(defconst vkg_TargetCount_TransportShip                 109)
+(defconst vkg_TargetCount_Galley                        110)
+(defconst vkg_TargetCount_FireShip                      111)
+(defconst vkg_TargetCount_DemolitionShip                112)
+(defconst vkg_TargetCount_CannonGalleon_Dromon          113)
+(defconst vkg_TargetCount_SpecialDockUnit               114)
+
+(defconst vkg_TargetCount_Ram_ArmoredElephant           115)
+(defconst vkg_TargetCount_Mangonel                      116)
+(defconst vkg_TargetCount_Scorpion                      117)
+(defconst vkg_TargetCount_BombardCannon                 118)
+(defconst vkg_TargetCount_SiegeTower                    119)
+(defconst vkg_TargetCount_SpecialSiegeUnit              120)
+
+(defconst vkg_TargetCount_Scout                         121)
+(defconst vkg_TargetCount_Knight                        122)
+(defconst vkg_TargetCount_Camel                         123)
+(defconst vkg_TargetCount_SpecialStableUnit             124)
+
+(defconst vkg_TargetCount_Archer                        125)
+(defconst vkg_TargetCount_Skirmisher                    126)
+(defconst vkg_TargetCount_CavalryArcher                 127)
+(defconst vkg_TargetCount_HandCannoneer                 128)
+(defconst vkg_TargetCount_SpecialArcheryUnit            129)
+
+(defconst vkg_TargetCount_Militiaman                    130)
+(defconst vkg_TargetCount_Spearman                      131)
+(defconst vkg_TargetCount_Condottiero                   132)
+(defconst vkg_TargetCount_SpecialBarracksUnit           133)
+
+; Buildings
+(defconst vkg_TargetCount_TownCenter                    134)
+(defconst vkg_TargetCount_House                         135)    ; except huns
+(defconst vkg_TargetCount_Dock                          136)
+(defconst vkg_TargetCount_FishTrap                      137)
+(defconst vkg_TargetCount_Mill_Folwark                  138)    ; poles
+(defconst vkg_TargetCount_Farm                          139)
+(defconst vkg_TargetCount_LumberCamp_MuleCart           140)    ; armenians and georgians
+(defconst vkg_TargetCount_GoldMiningCamp_MuleCart       141)    ; armenians and georgians
+(defconst vkg_TargetCount_StoneMiningCamp_MuleCart      142)    ; armenians and georgians
+(defconst vkg_TargetCount_Market                        143)
+(defconst vkg_TargetCount_Blacksmith                    144)
+(defconst vkg_TargetCount_Monastery_FortifiedChurch     145)    ; armenians
+(defconst vkg_TargetCount_University                    146)
+(defconst vkg_TargetCount_Wonder                        147)
+(defconst vkg_TargetCount_Barracks                      148)
+(defconst vkg_TargetCount_ArcheryRange                  149)
+(defconst vkg_TargetCount_Stable                        150)    ; except aztecs, incans and mayans
+(defconst vkg_TargetCount_SiegeWorkshop                 151)
+(defconst vkg_TargetCount_Castle                        152)
+(defconst vkg_TargetCount_BombardTower                  153)
+(defconst vkg_TargetCount_Tower                         154)
+(defconst vkg_TargetCount_Outpost                       155)
+(defconst vkg_TargetCount_SpecialBuilding               156)    ; caravaserail persians and indians, donjon scicilians, krepost bulgarians, feitoria portugueses
+
+; Researches -> usage of per reseach bit flags
+(defconst vkg_Target_Researches_TownCenter              157)
+(defconst vkg_Target_Researches_Mill                    158)
+(defconst vkg_Target_Researches_LumberCamp              159)
+(defconst vkg_Target_Researches_MiningCamp              160)
+(defconst vkg_Target_Researches_Market                  161)
+(defconst vkg_Target_Researches_Blacksmith              162)
+(defconst vkg_Target_Researches_Monastery               163)
+(defconst vkg_Target_Researches_University              164)
+(defconst vkg_Target_Researches_Dock                    165)
+(defconst vkg_Target_Researches_Castle                  166)
+(defconst vkg_Target_Researches_Barracks                167)
+(defconst vkg_Target_Researches_ArcheryRange            168)
+(defconst vkg_Target_Researches_Stable                  169)
+(defconst vkg_Target_Researches_SiegeWorkshop           170)
+
+
+(defrule    ; Generic
+    (true)
+=>
+    (set-goal vkg_TargetCount_Age 1)
+    (disable-self)
+)
+
+(defrule    ; Units
+    (true)
+=>
+    (set-goal vkg_TargetCount_Villager 21)
+    (set-goal vkg_TargetCount_TradeCart 0)
+    (set-goal vkg_TargetCount_Monk 0)
+    (set-goal vkg_TargetCount_SpecialMonasteryUnit 0)
+    (set-goal vkg_TargetCount_Trebuchet 0)
+    (set-goal vkg_TargetCount_Petard 0)
+    (set-goal vkg_TargetCount_SpecialCastleUnit 0)
+    (set-goal vkg_TargetCount_FishingShip 0)
+    (set-goal vkg_TargetCount_TradeCog 0)
+    (set-goal vkg_TargetCount_TransportShip 0)
+    (set-goal vkg_TargetCount_Galley 0)
+    (set-goal vkg_TargetCount_FireShip 0)
+    (set-goal vkg_TargetCount_DemolitionShip 0)
+    (set-goal vkg_TargetCount_CannonGalleon_Dromon 0)
+    (set-goal vkg_TargetCount_SpecialDockUnit 0)
+    (set-goal vkg_TargetCount_Ram_ArmoredElephant 0)
+    (set-goal vkg_TargetCount_Mangonel 0)
+    (set-goal vkg_TargetCount_Scorpion 0)
+    (set-goal vkg_TargetCount_BombardCannon 0)
+    (set-goal vkg_TargetCount_SiegeTower 0)
+    (set-goal vkg_TargetCount_SpecialSiegeUnit 0)
+    (set-goal vkg_TargetCount_Scout 0)
+    (set-goal vkg_TargetCount_Knight 0)
+    (set-goal vkg_TargetCount_Camel 0)
+    (set-goal vkg_TargetCount_SpecialStableUnit 0)
+    (set-goal vkg_TargetCount_Archer 0)
+    (set-goal vkg_TargetCount_Skirmisher 0)
+    (set-goal vkg_TargetCount_CavalryArcher 0)
+    (set-goal vkg_TargetCount_HandCannoneer 0)
+    (set-goal vkg_TargetCount_SpecialArcheryUnit 0)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    (set-goal vkg_TargetCount_Militiaman 0)
+    (set-goal vkg_TargetCount_Spearman 0)
+    (set-goal vkg_TargetCount_Condottiero 0)
+    (set-goal vkg_TargetCount_SpecialBarracksUnit 0)
+    (disable-self)
+)
+
+(defrule    ; Buildings
+    (true)
+=>
+    (set-goal vkg_TargetCount_TownCenter 1)
+    (set-goal vkg_TargetCount_House 2)
+    (set-goal vkg_TargetCount_Dock 0)
+    (set-goal vkg_TargetCount_FishTrap 0)
+    (set-goal vkg_TargetCount_Mill_Folwark 1)
+    (set-goal vkg_TargetCount_Farm 0)
+    (set-goal vkg_TargetCount_LumberCamp_MuleCart 1)
+    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 0)
+    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 0)
+    (set-goal vkg_TargetCount_Market 0)
+    (set-goal vkg_TargetCount_Blacksmith 0)
+    (set-goal vkg_TargetCount_Monastery_FortifiedChurch 0)
+    (set-goal vkg_TargetCount_University 0)
+    (set-goal vkg_TargetCount_Wonder 0)
+    (set-goal vkg_TargetCount_Barracks 0)
+    (set-goal vkg_TargetCount_ArcheryRange 0)
+    (set-goal vkg_TargetCount_Stable 0)
+    (set-goal vkg_TargetCount_SiegeWorkshop 0)
+    (set-goal vkg_TargetCount_Castle 0)
+    (set-goal vkg_TargetCount_BombardTower 0)
+    (set-goal vkg_TargetCount_Tower 0)
+    (set-goal vkg_TargetCount_Outpost 0)
+    (set-goal vkg_TargetCount_SpecialBuilding 0)
+    (disable-self)
+)
+
+(defrule    ; Researches
+    (true)
+=>
+    (set-goal vkg_Target_Researches_TownCenter 0)
+    (set-goal vkg_Target_Researches_Mill 0)
+    (set-goal vkg_Target_Researches_LumberCamp 0)
+    (set-goal vkg_Target_Researches_MiningCamp 0)
+    (set-goal vkg_Target_Researches_Market 0)
+    (set-goal vkg_Target_Researches_Blacksmith 0)
+    (set-goal vkg_Target_Researches_Monastery 0)
+    (set-goal vkg_Target_Researches_University 0)
+    (set-goal vkg_Target_Researches_Dock 0)
+    (set-goal vkg_Target_Researches_Castle 0)
+    (set-goal vkg_Target_Researches_Barracks 0)
+    (set-goal vkg_Target_Researches_ArcheryRange 0)
+    (set-goal vkg_Target_Researches_Stable 0)
+    (set-goal vkg_Target_Researches_SiegeWorkshop 0)
+    (set-goal vkg_Target_Researches_TownCenter 0)
+    (disable-self)
+)

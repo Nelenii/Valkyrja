@@ -1,414 +1,15 @@
 ; Valkyrja AoE2 AI by Nelenii for AoE2 Definitive Edition
 
 
-; ---- BEGIN Constants ----
+; ---- BEGIN Initialization ----
 
-(defconst vkc_False 0)
-(defconst vkc_True 1)
+(load "Valkyrja/Initialization/ConstantsInit")
+(load "Valkyrja/Initialization/StrategicNumbersInit")
+(load "Valkyrja/Initialization/FlagsInit")
+(load "Valkyrja/Initialization/GoalsInit")
 
-(defconst vkc_DebugLog_RuleError    vkc_True)
-(defconst vkc_DebugLog_Info         vkc_True)
-(defconst vkc_DebugLog_LoopData     vkc_False)
+; ---- END Initialization ----
 
-(defconst vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance   20)
-(defconst vkc_EarlyGame_FishHunt_MaxDropDistance            30)
-(defconst vkc_LateGame_WoodFoodGoldStone_MaxDropDistance    -1)
-(defconst vkc_LateGame_FishHunt_MaxDropDistance             -1)
-
-(defconst vkc_HousingHeadroomLimit 3)
-
-(defconst vkc_DarkAge 0)
-(defconst vkc_FeudalAge 1)
-(defconst vkc_CastleAge 2)
-(defconst vkc_ImperialAge 3)
-
-(defconst vkc_DropsiteMinDistance_Wood 5)
-(defconst vkc_DropsiteMinDistance_Food 5)
-(defconst vkc_DropsiteMinDistance_Gold 5)
-(defconst vkc_DropsiteMinDistance_Stone 5)
-(defconst vkc_IdleFarmCountLimit 2)
-
-; ---- END Constants ----
-
-
-; ---- BEGIN Goals ----
-
-(defconst vkg_GameTimestamp 1)
-(defconst vkg_LoopCount 2)
-(defconst vkg_LoopTimeMs 3)
-
-(defconst vkg_Temp0 4)
-(defconst vkg_Temp_ScopeLocalRule_0 10)
-
-; Strategy
-; add fun strategies as well like town center etc...
-(defconst vkg_Strategy_AllIn 91)
-(defconst vkg_Strategy_AggressiveTownCenter 92)
-(defconst vkg_Strategy_DarkRush 93) ; steps from 0 to x to build the strategy  % 2 => 0 deactivated 1 => activated
-(defconst vkg_Strategy_FeudalRush 94)
-(defconst vkg_Strategy_FastCastle 95)
-(defconst vkg_StrategyEconomicBoom 96)
-(defconst vkg_Strategy_FastImperial 97)
-(defconst vkg_Strategy_LateGame 98)
-(defconst vkg_TargetCount_Age                           99)
-
-; Units
-(defconst vkg_TargetCount_Villager                      100)
-
-(defconst vkg_TargetCount_TradeCart                     101)
-
-(defconst vkg_TargetCount_Monk                          102)    
-(defconst vkg_TargetCount_SpecialMonasteryUnit          103)
-
-(defconst vkg_TargetCount_Trebuchet                     104)
-(defconst vkg_TargetCount_Petard                        105)
-(defconst vkg_TargetCount_SpecialCastleUnit             106)
-
-(defconst vkg_TargetCount_FishingShip                   107)
-(defconst vkg_TargetCount_TradeCog                      108)
-(defconst vkg_TargetCount_TransportShip                 109)
-(defconst vkg_TargetCount_Galley                        110)
-(defconst vkg_TargetCount_FireShip                      111)
-(defconst vkg_TargetCount_DemolitionShip                112)
-(defconst vkg_TargetCount_CannonGalleon_Dromon          113)
-(defconst vkg_TargetCount_SpecialDockUnit               114)
-
-(defconst vkg_TargetCount_Ram_ArmoredElephant           115)
-(defconst vkg_TargetCount_Mangonel                      116)
-(defconst vkg_TargetCount_Scorpion                      117)
-(defconst vkg_TargetCount_BombardCannon                 118)
-(defconst vkg_TargetCount_SiegeTower                    119)
-(defconst vkg_TargetCount_SpecialSiegeUnit              120)
-
-(defconst vkg_TargetCount_Scout                         121)
-(defconst vkg_TargetCount_Knight                        122)
-(defconst vkg_TargetCount_Camel                         123)
-(defconst vkg_TargetCount_SpecialStableUnit             124)
-
-(defconst vkg_TargetCount_Archer                        125)
-(defconst vkg_TargetCount_Skirmisher                    126)
-(defconst vkg_TargetCount_CavalryArcher                 127)
-(defconst vkg_TargetCount_HandCannoneer                 128)
-(defconst vkg_TargetCount_SpecialArcheryUnit            129)
-
-(defconst vkg_TargetCount_Militiaman                    130)
-(defconst vkg_TargetCount_Spearman                      131)
-(defconst vkg_TargetCount_Condottiero                   132)
-(defconst vkg_TargetCount_SpecialBarracksUnit           133)
-
-; Buildings
-(defconst vkg_TargetCount_TownCenter                    134)
-(defconst vkg_TargetCount_House                         135)    ; except huns
-(defconst vkg_TargetCount_Dock                          136)
-(defconst vkg_TargetCount_FishTrap                      137)
-(defconst vkg_TargetCount_Mill_Folwark                  138)    ; poles
-(defconst vkg_TargetCount_Farm                          139)
-(defconst vkg_TargetCount_LumberCamp_MuleCart           140)    ; armenians and georgians
-(defconst vkg_TargetCount_GoldMiningCamp_MuleCart       141)    ; armenians and georgians
-(defconst vkg_TargetCount_StoneMiningCamp_MuleCart      142)    ; armenians and georgians
-(defconst vkg_TargetCount_Market                        143)
-(defconst vkg_TargetCount_Blacksmith                    144)
-(defconst vkg_TargetCount_Monastery_FortifiedChurch     145)    ; armenians
-(defconst vkg_TargetCount_University                    146)
-(defconst vkg_TargetCount_Wonder                        147)
-(defconst vkg_TargetCount_Barracks                      148)
-(defconst vkg_TargetCount_ArcheryRange                  149)
-(defconst vkg_TargetCount_Stable                        150)    ; except aztecs, incans and mayans
-(defconst vkg_TargetCount_SiegeWorkshop                 151)
-(defconst vkg_TargetCount_Castle                        152)
-(defconst vkg_TargetCount_BombardTower                  153)
-(defconst vkg_TargetCount_Tower                         154)
-(defconst vkg_TargetCount_Outpost                       155)
-(defconst vkg_TargetCount_SpecialBuilding               156)    ; caravaserail persians and indians, donjon scicilians, krepost bulgarians, feitoria portugueses
-
-; Researches -> usage of per reseach bit flags
-(defconst vkg_Target_Researches_TownCenter              157)
-(defconst vkg_Target_Researches_Mill                    158)
-(defconst vkg_Target_Researches_LumberCamp              159)
-(defconst vkg_Target_Researches_MiningCamp              160)
-(defconst vkg_Target_Researches_Market                  161)
-(defconst vkg_Target_Researches_Blacksmith              162)
-(defconst vkg_Target_Researches_Monastery               163)
-(defconst vkg_Target_Researches_University              164)
-(defconst vkg_Target_Researches_Dock                    165)
-(defconst vkg_Target_Researches_Castle                  166)
-(defconst vkg_Target_Researches_Barracks                167)
-(defconst vkg_Target_Researches_ArcheryRange            168)
-(defconst vkg_Target_Researches_Stable                  169)
-(defconst vkg_Target_Researches_SiegeWorkshop           170)
-
-; ---- END Goals ----
-
-
-
-; ---- BEGIN Flags ----
-
-; Town Center
-(defconst vkf_Research_TownCenter_Loom 1)
-(defconst vkf_Research_TownCenter_FeudalAge 2)
-(defconst vkf_Research_TownCenter_CastleAge 4)
-(defconst vkf_Research_TownCenter_ImperialAge 8)
-(defconst vkf_Research_TownCenter_TownWatch 16)
-(defconst vkf_Research_TownCenter_TownPatrol 32)
-(defconst vkf_Research_TownCenter_Wheelbarrow 64)
-(defconst vkf_Research_TownCenter_HandCart 128)
-
-; Mill
-(defconst vkf_Research_Mill_HorseCollar 1)
-(defconst vkf_Research_Mill_HeavyPlow 2)
-(defconst vkf_Research_Mill_CropRotation 4)
-
-; Lumber Camp
-(defconst vkf_Research_LumberCamp_DoubleBitAxe 1)
-(defconst vkf_Research_LumberCamp_BowSaw 2)
-(defconst vkf_Research_LumberCamp_TwoManSaw 4)
-
-; Mining Camp
-(defconst vkf_Research_MiningCamp_GoldMining 1)
-(defconst vkf_Research_MiningCamp_GoldShaftMining 2)
-(defconst vkf_Research_MiningCamp_StoneMining 4)
-(defconst vkf_Research_MiningCamp_StoneShaftMining 8)
-
-; Market
-(defconst vkf_Research_Market_Caravan 1)
-(defconst vkf_Research_Market_Coinage 2)
-(defconst vkf_Research_Market_Banking 4)
-(defconst vkf_Research_Market_Guilds 8)
-;(defconst vkf_Research_Market_Cartography 16)   ; TODO: check if is it not researched by default?
-
-; Blacksmith
-(defconst vkf_Research_Blacksmith_Forging 1)
-(defconst vkf_Research_Blacksmith_IronCasting 2)
-(defconst vkf_Research_Blacksmith_BlastFurnace 4)
-(defconst vkf_Research_Blacksmith_Fletching 8)
-(defconst vkf_Research_Blacksmith_BodkinArrow 16)
-(defconst vkf_Research_Blacksmith_Bracer 32)
-(defconst vkf_Research_Blacksmith_ScaleMail 64)
-(defconst vkf_Research_Blacksmith_ChainMail 128)
-(defconst vkf_Research_Blacksmith_PlateMail 256)
-(defconst vkf_Research_Blacksmith_PaddedArcherArmor 512)
-(defconst vkf_Research_Blacksmith_LeatherArcherArmor 1024)
-(defconst vkf_Research_Blacksmith_RingArcherArmor 2048)
-(defconst vkf_Research_Blacksmith_ScaleBarding 4096)
-(defconst vkf_Research_Blacksmith_Chainbarding 8192)
-(defconst vkf_Research_Blacksmith_PlateBarding 16384)
-
-; Monastery
-(defconst vkf_Research_Monastery_Devotion 1)
-(defconst vkf_Research_Monastery_Faith 2)
-(defconst vkf_Research_Monastery_Atonement 4)
-(defconst vkf_Research_Monastery_Fervor 8)
-(defconst vkf_Research_Monastery_HerbalMedicine 16)
-(defconst vkf_Research_Monastery_Heresy 32)
-(defconst vkf_Research_Monastery_Redemption 64)
-(defconst vkf_Research_Monastery_Sanctity 128)
-(defconst vkf_Research_Monastery_BlockPrinting 256)
-(defconst vkf_Research_Monastery_Illumination 512)
-(defconst vkf_Research_Monastery_Theocracy 1024)
-
-; University
-(defconst vkf_Research_University_Masonry 1)
-(defconst vkf_Research_University_Architecture 2)
-(defconst vkf_Research_University_FortifiedWall 4)
-(defconst vkf_Research_University_GuardTower 8)
-(defconst vkf_Research_University_Keep 16)
-(defconst vkf_Research_University_Ballistics 32)
-(defconst vkf_Research_University_HeatedShot 64)
-(defconst vkf_Research_University_MurderHoles 128)
-(defconst vkf_Research_University_TreadmillCrane 256)   ; stonecutting in script
-(defconst vkf_Research_University_Arrowslits 512)
-(defconst vkf_Research_University_SiegeEngineers 1024)
-(defconst vkf_Research_University_Chemistry 2048)
-(defconst vkf_Research_University_BombardTower 4096)
-
-; Dock
-(defconst vkf_Research_Dock_WarGalley 1)
-(defconst vkf_Research_Dock_Galleon 2)
-(defconst vkf_Research_Dock_FastFireShip 4)
-(defconst vkf_Research_Dock_HeavyDemolitionShip 8)
-(defconst vkf_Research_Dock_CannonGalleon 16)
-(defconst vkf_Research_Dock_EliteCannonGalleon 32)  ; deckguns
-(defconst vkf_Research_Dock_EliteSpecialUnit 64)
-(defconst vkf_Research_Dock_Gillnets 128)
-(defconst vkf_Research_Dock_Careening 256)
-(defconst vkf_Research_Dock_DryDock 512)
-(defconst vkf_Research_Dock_ShipWright 1024)
-
-; Castle
-(defconst vkf_Research_Castle_EliteSpecialUnit 1)
-(defconst vkf_Research_Castle_CastleAgeSpecialTech 2)
-(defconst vkf_Research_Castle_ImperialAgeSpecialTech 4)
-(defconst vkf_Research_Castle_Conscription 8)
-(defconst vkf_Research_Castle_Hoardings 16)
-(defconst vkf_Research_Castle_Sappers 32)
-(defconst vkf_Research_Castle_SpiesTreason 64)
-
-; Barracks
-(defconst vkf_Research_Barracks_ManAtArms 1)
-(defconst vkf_Research_Barracks_LongSwordsman 2)
-(defconst vkf_Research_Barracks_TwoHandedSwordsman 4)
-(defconst vkf_Research_Barracks_Champion 8) ; or legionary for romans 
-(defconst vkf_Research_Barracks_Pikeman 16)
-(defconst vkf_Research_Barracks_Halberdier 32)
-(defconst vkf_Research_Barracks_SpecialUnit 64)   ; eagle warrior
-(defconst vkf_Research_Barracks_EliteSpecialUnit 128)  ; elite eagle warrior
-(defconst vkf_Research_Barracks_Supplies 256)  
-(defconst vkf_Research_Barracks_Gambesons 512)
-(defconst vkf_Research_Barracks_Tracking 1024)
-(defconst vkf_Research_Barracks_Squires 2048)
-(defconst vkf_Research_Barracks_Arson 4096)
-
-; Archery Range
-(defconst vkf_Research_ArcheryRange_Crossbow 1)
-(defconst vkf_Research_ArcheryRange_Arbalest 2)
-(defconst vkf_Research_ArcheryRange_EliteSkirmisher 4)
-(defconst vkf_Research_ArcheryRange_HeavyCavalryArcher 8)
-(defconst vkf_Research_ArcheryRange_HandCannon 16)
-(defconst vkf_Research_ArcheryRange_ThumbRing 32)
-(defconst vkf_Research_ArcheryRange_PartianTactics 64)
-(defconst vkf_Research_ArcheryRange_EliteSpecialUnit 128)   ; genitour for berber, imperial skirmisher for vietnamese, elephant archer
-
-; Stable
-(defconst vkf_Research_Stable_LightCavalry 1)
-(defconst vkf_Research_Stable_Hussar 2)     ; or winged hussar for poles and lithuanians
-(defconst vkf_Research_Stable_Cavalier 4)
-(defconst vkf_Research_Stable_Paladin 8)   ; or savar for persian
-(defconst vkf_Research_Stable_HeavyCamel 16)
-(defconst vkf_Research_Stable_Bloodlines 32)
-(defconst vkf_Research_Stable_Husbandry 64)
-(defconst vkf_Research_Stable_EliteSpecialUnit 128)   ; imperial camel for hindustanis, or battle elephant or steppe lancer, shrivamsha for gurjaras
-
-; Siege Workshop
-(defconst vkf_Research_SiegeWorkshop_CappedRam 1)
-(defconst vkf_Research_SiegeWorkshop_SiegeRam 2)
-(defconst vkf_Research_SiegeWorkshop_SiegeElephant 4) ; TODO: merge with the two above
-(defconst vkf_Research_SiegeWorkshop_Onager 8)
-(defconst vkf_Research_SiegeWorkshop_SiegeOnager 16)
-(defconst vkf_Research_SiegeWorkshop_HeavyScorpion 32)
-(defconst vkf_Research_SiegeWorkshop_BombardCannon 64)
-(defconst vkf_Research_SiegeWorkshop_EliteSpecialUnit 128)  ; houfnice for bohemian
-
-; ---- END Flags ----
-
-
-
-; ---- BEGIN Rules ----
-
-; Strategic numbers initialization
-(defrule
-	(true)
-=>
-    (set-strategic-number sn-do-not-scale-for-difficulty-level  vkc_True)
-    (set-strategic-number sn-initial-exploration-required       0)
-    (set-strategic-number sn-cap-civilian-builders              200)
-    (set-strategic-number sn-enable-new-building-system         vkc_True)
-    (set-strategic-number sn-cap-civilian-explorers             0)
-    (set-strategic-number sn-number-explore-groups              1)
-    (set-strategic-number sn-total-number-explorers             1)
-	(set-strategic-number sn-consecutive-idle-unit-limit        1)
-    (set-strategic-number sn-zero-priority-distance             255)
-    (set-strategic-number sn-enable-offensive-priority          vkc_True)
-    (set-strategic-number sn-enable-patrol-attack               vkc_True)
-	(set-strategic-number sn-scale-minimum-attack-group-size    0)
-	(set-strategic-number sn-task-ungrouped-soldiers            vkc_False)
-    (set-strategic-number sn-dropsite-separation-distance       3)
-    (set-strategic-number sn-allow-adjacent-dropsites           vkc_True)
-    (set-strategic-number sn-enable-boar-hunting                1) ; 0 for deers only, 1 for deers and boars, 2 for boars only
-    (set-strategic-number sn-maximum-wood-drop-distance         vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance)
-	(set-strategic-number sn-maximum-food-drop-distance         vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance)
-	(set-strategic-number sn-maximum-gold-drop-distance         vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance)
-	(set-strategic-number sn-maximum-stone-drop-distance        vkc_EarlyGame_WoodFoodGoldStone_MaxDropDistance)
-    (set-strategic-number sn-maximum-fish-boat-drop-distance    vkc_EarlyGame_FishHunt_MaxDropDistance)
-    (set-strategic-number sn-maximum-hunt-drop-distance         vkc_EarlyGame_FishHunt_MaxDropDistance)
-	(disable-self)
-)
-
-; Goals initialization
-(defrule    ; Generic
-    (true)
-=>
-    (set-goal vkg_TargetCount_Age 1)
-    (set-strategic-number sn-food-gatherer-percentage 80)
-	(set-strategic-number sn-wood-gatherer-percentage 20)
-	(set-strategic-number sn-gold-gatherer-percentage 0)
-	(set-strategic-number sn-stone-gatherer-percentage 0)
-    (disable-self)
-)
-
-(defrule    ; Units
-    (true)
-=>
-    (set-goal vkg_TargetCount_Villager 21)
-    (set-goal vkg_TargetCount_TradeCart 0)
-    (set-goal vkg_TargetCount_Monk 0)
-    (set-goal vkg_TargetCount_SpecialMonasteryUnit 0)
-    (set-goal vkg_TargetCount_Trebuchet 0)
-    (set-goal vkg_TargetCount_Petard 0)
-    (set-goal vkg_TargetCount_SpecialCastleUnit 0)
-    (set-goal vkg_TargetCount_FishingShip 0)
-    (set-goal vkg_TargetCount_TradeCog 0)
-    (set-goal vkg_TargetCount_TransportShip 0)
-    (set-goal vkg_TargetCount_Galley 0)
-    (set-goal vkg_TargetCount_FireShip 0)
-    (set-goal vkg_TargetCount_DemolitionShip 0)
-    (set-goal vkg_TargetCount_CannonGalleon_Dromon 0)
-    (set-goal vkg_TargetCount_SpecialDockUnit 0)
-    (set-goal vkg_TargetCount_Ram_ArmoredElephant 0)
-    (set-goal vkg_TargetCount_Mangonel 0)
-    (set-goal vkg_TargetCount_Scorpion 0)
-    (set-goal vkg_TargetCount_BombardCannon 0)
-    (set-goal vkg_TargetCount_SiegeTower 0)
-    (set-goal vkg_TargetCount_SpecialSiegeUnit 0)
-    (set-goal vkg_TargetCount_Scout 0)
-    (set-goal vkg_TargetCount_Knight 0)
-    (set-goal vkg_TargetCount_Camel 0)
-    (set-goal vkg_TargetCount_SpecialStableUnit 0)
-    (set-goal vkg_TargetCount_Archer 0)
-    (set-goal vkg_TargetCount_Skirmisher 0)
-    (set-goal vkg_TargetCount_CavalryArcher 0)
-    (set-goal vkg_TargetCount_HandCannoneer 0)
-    (set-goal vkg_TargetCount_SpecialArcheryUnit 0)
-    (disable-self)
-)
-
-(defrule
-    (true)
-=>
-    (set-goal vkg_TargetCount_Militiaman 0)
-    (set-goal vkg_TargetCount_Spearman 0)
-    (set-goal vkg_TargetCount_Condottiero 0)
-    (set-goal vkg_TargetCount_SpecialBarracksUnit 0)
-    (disable-self)
-)
-
-(defrule    ; Buildings
-    (true)
-=>
-    (set-goal vkg_TargetCount_TownCenter 1)
-    (set-goal vkg_TargetCount_House 2)
-    (set-goal vkg_TargetCount_Dock 0)
-    (set-goal vkg_TargetCount_FishTrap 0)
-    (set-goal vkg_TargetCount_Mill_Folwark 1)
-    (set-goal vkg_TargetCount_Farm 0)
-    (set-goal vkg_TargetCount_LumberCamp_MuleCart 1)
-    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 0)
-    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 0)
-    (set-goal vkg_TargetCount_Market 0)
-    (set-goal vkg_TargetCount_Blacksmith 0)
-    (set-goal vkg_TargetCount_Monastery_FortifiedChurch 0)
-    (set-goal vkg_TargetCount_University 0)
-    (set-goal vkg_TargetCount_Wonder 0)
-    (set-goal vkg_TargetCount_Barracks 0)
-    (set-goal vkg_TargetCount_ArcheryRange 0)
-    (set-goal vkg_TargetCount_Stable 0)
-    (set-goal vkg_TargetCount_SiegeWorkshop 0)
-    (set-goal vkg_TargetCount_Castle 0)
-    (set-goal vkg_TargetCount_BombardTower 0)
-    (set-goal vkg_TargetCount_Tower 0)
-    (set-goal vkg_TargetCount_Outpost 0)
-    (set-goal vkg_TargetCount_SpecialBuilding 0)
-    (disable-self)
-)
 
 (defrule
     (true)
@@ -417,42 +18,130 @@
     (disable-self)
 )
 
-(defrule    ; Researches
-    (true)
-=>
-    (set-goal vkg_Target_Researches_TownCenter 0)
-    (set-goal vkg_Target_Researches_Mill 0)
-    (set-goal vkg_Target_Researches_LumberCamp 0)
-    (set-goal vkg_Target_Researches_MiningCamp 0)
-    (set-goal vkg_Target_Researches_Market 0)
-    (set-goal vkg_Target_Researches_Blacksmith 0)
-    (set-goal vkg_Target_Researches_Monastery 0)
-    (set-goal vkg_Target_Researches_University 0)
-    (set-goal vkg_Target_Researches_Dock 0)
-    (set-goal vkg_Target_Researches_Castle 0)
-    (set-goal vkg_Target_Researches_Barracks 0)
-    (set-goal vkg_Target_Researches_ArcheryRange 0)
-    (set-goal vkg_Target_Researches_Stable 0)
-    (set-goal vkg_Target_Researches_SiegeWorkshop 0)
-    (set-goal vkg_Target_Researches_TownCenter 0)
-    (disable-self)
-)
-
-
 ;(defconst vkc-max-villagers 150)
 (defconst vkc-dark-age-villagers-count-for-lumber-camp 7)
 (defconst vkc-dark-age-villagers-count-for-mill 11)
 
 
-
-
+; ---- BEGIN Generic Rules ----
 
 (load "Valkyrja/Generic/ResearchRules")
 (load "Valkyrja/Generic/BuildingRules")
 (load "Valkyrja/Generic/UnitRules")
 
+; ---- END Generic Rules ----
 
 
+; Town Center
+(defrule
+    (current-age == dark-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_FeudalAge)
+    (can-research-with-escrow feudal-age)
+=>
+    (set-goal vkg_TargetCount_Age 2)
+    (release-escrow food)
+    (research feudal-age)
+    (set-goal vkg_TargetCount_Villager 30)
+    (set-goal vkg_TargetCount_Farm 10)
+    (set-goal vkg_TargetCount_LumberCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 1)
+    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 1)
+    (set-goal vkg_TargetCount_Market 1)
+    (set-goal vkg_TargetCount_Blacksmith 1)
+    (set-goal vkg_TargetCount_Barracks 1)
+    (set-goal vkg_TargetCount_ArcheryRange 1)
+    (set-goal vkg_TargetCount_Stable 1)
+    (set-strategic-number sn-food-gatherer-percentage 55)
+	(set-strategic-number sn-wood-gatherer-percentage 30)
+	(set-strategic-number sn-gold-gatherer-percentage 10)
+	(set-strategic-number sn-stone-gatherer-percentage 5)
+)
+
+
+
+(defrule
+    (current-age == feudal-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_CastleAge)
+    (can-research-with-escrow castle-age)
+=>
+    (set-goal vkg_TargetCount_Age 3)
+    (release-escrow food)
+    (release-escrow gold)
+    (research castle-age)
+    (set-goal vkg_TargetCount_Villager 120)
+    (set-goal vkg_TargetCount_Farm 40)
+    (set-goal vkg_TargetCount_TownCenter 3)
+    (set-goal vkg_TargetCount_LumberCamp_MuleCart 4)
+    (set-goal vkg_TargetCount_GoldMiningCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_StoneMiningCamp_MuleCart 2)
+    (set-goal vkg_TargetCount_Monastery_FortifiedChurch 1)
+    (set-goal vkg_TargetCount_University 1)
+    (set-goal vkg_TargetCount_SiegeWorkshop 1)
+    (set-goal vkg_TargetCount_Castle 1)
+    (set-goal vkg_TargetCount_Barracks 3)
+    (set-goal vkg_TargetCount_ArcheryRange 3)
+    (set-goal vkg_TargetCount_Stable 3)
+    (set-strategic-number sn-food-gatherer-percentage 30)
+	(set-strategic-number sn-wood-gatherer-percentage 30)
+	(set-strategic-number sn-gold-gatherer-percentage 30)
+	(set-strategic-number sn-stone-gatherer-percentage 10)
+)
+
+
+
+(defrule
+    (current-age == castle-age)
+    (up-compare-goal vkg_TargetCount_Age c:>= vkc_ImperialAge)
+    (can-research-with-escrow imperial-age)
+=>
+    (release-escrow food)
+    (release-escrow gold)
+    (research imperial-age)
+    (set-goal vkg_TargetCount_Villager 200)
+)
+
+
+
+
+; test flags
+(defconst vkg_TestFlag 500)
+(defconst vkf_FirstTest 1)
+(defconst vkf_SecondTest 2)
+(defconst vkf_ThirdTest 4)
+
+
+(defrule
+    (true)
+=>
+    (set-goal vkg_TestFlag 0)
+    (up-chat-data-to-all "Test Flag = %d"   g: vkg_TestFlag)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    (up-modify-flag vkg_TestFlag c:+ vkf_SecondTest)
+    (up-modify-flag vkg_TestFlag c:+ vkf_ThirdTest)
+    ;(up-chat-data-to-all "Test Flag = %d"   g: vkg_TestFlag)
+)
+
+(defrule
+    (up-compare-flag vkg_TestFlag == vkf_ThirdTest)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    ;(up-modify-flag vkg_TestFlag c:- vkf_SecondTest)
+    (chat-to-all "True 3")
+)
+
+(defrule
+    (up-compare-flag vkg_TestFlag == vkf_SecondTest)
+=>
+    ;(up-modify-flag vkg_TestFlag c:- vkf_FirstTest)
+    ;(up-modify-flag vkg_TestFlag c:- vkf_SecondTest)
+    (chat-to-all "True 2")
+)
 
 ;(set-strategic-number sn-minimum-town-size 12)
 ;	(set-strategic-number sn-maximum-town-size 20)
